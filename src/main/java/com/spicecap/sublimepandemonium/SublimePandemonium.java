@@ -2,6 +2,10 @@
 
 package com.spicecap.sublimepandemonium;
 
+import static com.spicecap.sublimepandemonium.Card.isDead;
+import static com.spicecap.sublimepandemonium.Card.isStuned;
+import static com.spicecap.sublimepandemonium.Card.isBleeding;
+
 
 public class SublimePandemonium {
 
@@ -12,22 +16,34 @@ public class SublimePandemonium {
         new Card(2, Card.Type.MAGE, "Ciclops", 5, 3, Card.Habbility.STORM)
         };
         
-        System.out.println(bank[0]);
-        System.out.println(bank[1]);
         
         Card[] deck1 = new Card[5];
         
         deck1[0] = bank[0];
         deck1[1] = bank[1];
-        deck1[2] = bank[1];
-        deck1[3] = bank[1];
-        deck1[4] = bank[1];
+        
         
        
         System.out.println(deck1[0]);
         System.out.println(deck1[1]);
-        System.out.println(deck1[2]);
-        System.out.println(deck1[3]);
-        System.out.println(deck1[4]);          
+        
+        if (isDead(deck1[0])) 
+            System.out.println("Está muerta.");
+        else
+            System.out.println("No está muerta.");
+        
+        if (isStuned(deck1[0])) 
+            System.out.println("Está stuneado.");
+        else
+            System.out.println("No está stuneado.");
+        
+        if (isBleeding(deck1[0])) 
+            System.out.println("Está sangrando.");
+        else
+            System.out.println("No está sangrando.");
+        
+        
+        
+                
     }
 }

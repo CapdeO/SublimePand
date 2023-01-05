@@ -40,5 +40,27 @@ public final class Card {
         return "ID "+id+" Type: "+type+" Name: "+name+" Hp: "+hp+" Att: "+atq+" Habbility: "+habbility;
     }
     
+    public static boolean isDead(Card card) {
+        if (card.hp <= 0) 
+            return true;
+        else 
+            return false;
+    }
+    public static boolean isStuned(Card card) {
+        if (card.stuned == 0)
+            return false;
+        else 
+            return true;
+    }
+    public static boolean isBleeding(Card card) {
+        if (card.bleeding == 0) 
+            return false;
+        else
+            return true;
+    }
     
+    
+    
+    
+    //End Card
 }
