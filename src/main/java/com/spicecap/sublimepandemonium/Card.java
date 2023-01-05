@@ -8,7 +8,7 @@ public final class Card {
         TANK, FIGHTER, SUPPORT, MARKSMAN, MAGE, ASSASSIN
     }
     public static enum Habbility {
-        BLEED, DMG_CRIT, DMG_RED, DMG_REF, DMG_UP, DODGE, HEAL_SLF, STORM
+        BLEED, DMG_CRIT, DMG_RED, DMG_REF, DMG_UP, DODGE, HEAL_SLF, STORM, HEAL_2
     }
     
     
