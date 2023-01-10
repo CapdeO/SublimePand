@@ -66,6 +66,8 @@ public final class Card {
     
     public static void attack(ArrayList deckOrig, Card cardOrig, ArrayList deckDest, Card cardDest) {
         
+        int attackPoints;
+        
         //Ataque básico
         if (!isStuned(cardOrig)) {
             cardDest.hp -= cardOrig.atq;
@@ -78,7 +80,7 @@ public final class Card {
                 deckDest.remove(cardDest); 
             }    
             else if (isDead(cardOrig)) { //Por si el ataque rebota y lo mata
-                System.out.println("Murió " + cardDest);
+                System.out.println("Murió " + cardOrig);
                 deckOrig.remove(cardOrig); 
             }
                 
