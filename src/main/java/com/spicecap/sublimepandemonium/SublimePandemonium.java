@@ -2,10 +2,10 @@
 
 package com.spicecap.sublimepandemonium;
 
+import static com.spicecap.sublimepandemonium.Card.attack;
 import static com.spicecap.sublimepandemonium.Card.isDead;
 import static com.spicecap.sublimepandemonium.Card.isStuned;
 import static com.spicecap.sublimepandemonium.Card.isBleeding;
-//import com.spicecap.sublimepandemonium.Game.attack;
 import java.util.ArrayList;
 
 
@@ -79,7 +79,7 @@ public class SublimePandemonium {
         System.out.println(deck2.get(0));
         
         //Probando ATTACK
-        attack(deck1.get(0), deck2.get(0));
+        attack(deck1, deck1.get(0), deck2, deck2.get(0));
         
         System.out.println("VIDA DESPUES DEL ATAQUE");
         System.out.println(deck2.get(0));
@@ -90,11 +90,5 @@ public class SublimePandemonium {
         //END MAIN
     }
 
-    private static void attack(Card cardOrigen, Card cardDestino) {
-        if (!isStuned(cardOrigen)) {
-            cardDestino.hp -= cardOrigen.atq;
-            
-            System.out.println(cardOrigen + " Atacó a " + cardDestino);
-        }
-    }
+    
 }

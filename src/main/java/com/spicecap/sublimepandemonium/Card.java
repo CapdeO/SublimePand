@@ -1,5 +1,6 @@
 
 package com.spicecap.sublimepandemonium;
+import java.util.ArrayList;
 
 
 public final class Card {
@@ -37,8 +38,10 @@ public final class Card {
     
     @Override
     public String toString() {
-        return "ID "+id+" Type: "+type+" Name: "+name+" Hp: "+hp+" Att: "+atq+" Habbility: "+habbility;
+        return "[["+ name+" HP:"+hp+" ATT:"+atq+"]]";
     }
+    
+    //Métodos de "estado"
     
     public static boolean isDead(Card card) {
         if (card.hp <= 0) 
@@ -59,7 +62,38 @@ public final class Card {
             return true;
     }
     
+    //En este método se centra prácticamente la mayor parte de la lógica del juego
     
+    public static void attack(ArrayList deckOrig, Card cardOrig, ArrayList deckDest, Card cardDest) {
+        
+        //Ataque básico
+        if (!isStuned(cardOrig)) {
+            cardDest.hp -= cardOrig.atq;
+            
+            System.out.println(cardOrig + " ATACÓ--> " + cardDest);
+            
+            
+            if (isDead(cardDest)) { //Por si lo mata
+                System.out.println("Murió " + cardDest);
+                deckDest.remove(cardDest); 
+            }    
+            else if (isDead(cardOrig)) { //Por si el ataque rebota y lo mata
+                System.out.println("Murió " + cardDest);
+                deckOrig.remove(cardOrig); 
+            }
+                
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    }
     
     
     //End Card
