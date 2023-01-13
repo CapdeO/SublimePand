@@ -1,17 +1,18 @@
 
 package com.spicecap.sublimepandemonium;
 import java.util.ArrayList;
+import java.util.Random;
 
 
-public final class Card {
+
+public class Card {
     
-    public static enum Type {
+    public enum Type {
         TANK, FIGHTER, SUPPORT, MARKSMAN, MAGE, ASSASSIN
     }
-    public static enum Habbility {
+    public enum Habbility {
         BLEED, DMG_CRIT, DMG_RED, DMG_REF, DMG_UP, DODGE, HEAL_SLF, STORM, HEAL_2
     }
-    
     
     public int id;
     public Type type;
@@ -36,67 +37,103 @@ public final class Card {
         this.habbility = habbility;
     }
     
-    @Override
-    public String toString() {
-        return "[["+ name+" HP:"+hp+" ATT:"+atq+"]]";
+    //@Override
+    //public String toString() {
+    //    return "[["+ name+" HP:"+hp+" ATT:"+atq+"]]";
+    //}
+    
+    public String showCard() {
+        return "[["+ this.name+" HP:"+this.hp+" ATT:"+this.atq+"]]";
     }
     
-    //Métodos de "estado"
     
-    public static boolean isDead(Card card) {
-        if (card.hp <= 0) 
+    public boolean isDead() {
+        if (this.hp <= 0) 
             return true;
         else 
             return false;
     }
-    public static boolean isStuned(Card card) {
-        if (card.stuned == 0)
+    public boolean isStuned() {
+        if (this.stuned == 0)
             return false;
         else 
             return true;
     }
-    public static boolean isBleeding(Card card) {
-        if (card.bleeding == 0) 
+    public boolean isBleeding() {
+        if (this.bleeding == 0) 
             return false;
         else
             return true;
     }
     
-    //En este método se centra prácticamente la mayor parte de la lógica del juego
     
-    public static void attack(ArrayList deckOrig, Card cardOrig, ArrayList deckDest, Card cardDest) {
+    public void attack(ArrayList deckOrig, ArrayList deckDest, Card cardDest) {
         
-        int attackPoints;
+        System.out.println(this + " will attack " + cardDest);
+        
+        int attackPoints = this.atq;
+        
+        if (this.habbility == Habbility.DMG_CRIT){
+            if (posibilidad() <= 30) {
+                attackPoints += 2;
+                System.out.println("CRITIC DAMAGE!!");
+            }
+        }
         
         //Ataque básico
-        if (!isStuned(cardOrig)) {
-            cardDest.hp -= cardOrig.atq;
+        if (!this.isStuned()) {
             
-            System.out.println(cardOrig + " ATACÓ--> " + cardDest);
+            cardDest.hp -= attackPoints;
             
+            System.out.println(this + " ATACÓ--> " + cardDest);
             
-            if (isDead(cardDest)) { //Por si lo mata
+            if (cardDest.isDead()) { //Por si lo mata
                 System.out.println("Murió " + cardDest);
-                deckDest.remove(cardDest); 
+                deckDest.remove(cardDest);
             }    
-            else if (isDead(cardOrig)) { //Por si el ataque rebota y lo mata
-                System.out.println("Murió " + cardOrig);
-                deckOrig.remove(cardOrig); 
+            else if (this.isDead()) { //Por si el ataque rebota y lo mata
+                System.out.println("Murió " + this);
+                deckOrig.remove(this);
             }
                 
         }
-        
-        
-        
-        
-        
-        
-        
-        
+
         
         
     }
     
     
-    //End Card
+    //--------------------------------------------
+    public static int posibilidadActual = 0;
+    
+    public static int[] posibilidades = new int[100];    
+
+    public static void generarPosibilidades() {
+        for(int i = 0; i <= posibilidades.length-1; i++) {
+            Random ran = new Random();
+            int x = ran.nextInt(100) + 1;
+            posibilidades[i] = x;
+        }
+    }
+       
+    public int posibilidad() {
+        posibilidadActual++;
+        return posibilidades[posibilidadActual-1];
+    }
+
+    //--------------------------------------------
+    
+ 
+
+    
+
+    
+    
+   
+
+   
+
+    
+    
+    
 }

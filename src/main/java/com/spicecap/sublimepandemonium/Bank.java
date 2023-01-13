@@ -6,7 +6,7 @@ package com.spicecap.sublimepandemonium;
 
 public class Bank {
     
-    static Card bank[] = {
+    static Card[] bank = {
         new Card(0, Card.Type.TANK, "Taur", 12, 1, Card.Habbility.HEAL_SLF),
         new Card(1, Card.Type.MAGE, "Ciclops", 5, 2, Card.Habbility.STORM),
         new Card(2, Card.Type.FIGHTER, "Abomination", 7, 5, Card.Habbility.DMG_UP),
