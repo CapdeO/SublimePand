@@ -51,20 +51,69 @@ public class SublimePandemonium {
         System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         System.out.println();
         
+        //player1.deck[0].attack(player1.deck, player2.deck);
+        
+        //player2.deck[0].attack(player2.deck, player1.deck);
+        
+        //player1.deck[1].attack(player1.deck, player2.deck);
+        
+        //player2.deck[1].attack(player2.deck, player1.deck);
+        
+        //player1.deck[2].attack(player1.deck, player2.deck);
+        
+        //player2.deck[2].attack(player2.deck, player1.deck);
+        
+        //player1.deck[3].attack(player1.deck, player2.deck);
+        
+        //player2.deck[3].attack(player2.deck, player1.deck);
+        
+        //player1.deck[4].attack(player1.deck, player2.deck);
+        
+        //player2.deck[4].attack(player2.deck, player1.deck);
+        
         do {            
+            
+            boolean p1AttackDone = false;
+            boolean p2AttackDone = false;
             int i = 0;
+            int j = 0;
             
-            if (player1.deck[i].dead == false) {
-                player1.deck[i].attack(player1.deck, player2.deck);
-            }
-            if (player2.deck[i].dead == false) {
-                player2.deck[i].attack(player2.deck, player1.deck);
-            }
+            do {                
+                
+                if (player1.deck[i].isDead() == false) {
+                    player1.deck[i].attack(player1.deck, player2.deck);
+                    p1AttackDone = true;
+                } else {
+                    i++;
+                }
+                
+            } while (p1AttackDone == false);
             
             
-            i++;
+            do {                
+                
+                if (player2.deck[j].isDead() == false) {
+                    player2.deck[j].attack(player2.deck, player1.deck);
+                    p2AttackDone = true;
+                } else {
+                    i++;
+                }
+                
+            } while (p2AttackDone == false);
             
-        } while (player1.cardsLeft > 0 || player2.cardsLeft > 0);
-
+         
+            
+            p1AttackDone = false;
+            p2AttackDone = false;
+            
+        } while (player1.cardsLeft > 0 && player2.cardsLeft > 0);
+        
+        
+        
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        System.out.println();
+        player1.showDeck();
+        player2.showDeck();
+        
     }
 }

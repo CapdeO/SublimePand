@@ -92,17 +92,17 @@ public class Card {
 
                     deckDest[target].hp -= attackPoints;
 
-                    System.out.println(this + " ATTACKED--> " + deckDest[target]);
-
+                    System.out.println(this + "@" + Integer.toHexString(this.hashCode()) + " ATTACKED--> " + deckDest[target] + "@" + Integer.toHexString(deckDest[target].hashCode()));
+                    
+                    attackDone = true;
+                    
                     if (deckDest[target].isDead()) { //Por si lo mata
                         System.out.println("Murió " + deckDest[target]);
-                        deckDest[target].dead = true;
-                        attackDone = true;    
+                        deckDest[target].dead = true; 
                     }    
                     else if (this.isDead()) { //Por si el ataque rebota y lo mata
                         System.out.println("Murió " + this);
                         this.dead = true;
-                        attackDone = true; 
                     }
                 }
             }

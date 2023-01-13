@@ -14,8 +14,9 @@ public class Player {
     
     public void showDeck() {
         System.out.println(this);
-        for (int i = 0; i < this.cardsLeft-1; i++) {
-            System.out.print(this.deck[i]);
+        for (int i = 0; i < this.cardsLeft; i++) {
+            if (this.deck[i].isDead() == false) 
+                System.out.print(this.deck[i]);
         }
         System.out.println();
     }
