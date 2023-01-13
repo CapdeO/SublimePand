@@ -1,7 +1,6 @@
 
 
 package com.spicecap.sublimepandemonium;
-import java.util.ArrayList;
 
 
 
@@ -14,74 +13,58 @@ public class SublimePandemonium {
         
         Card.generarPosibilidades();
         
-        ArrayList<Card> deck1 = new ArrayList<Card>(5); 
+        //-------------------------------------------------
+        Player player1 = new Player();
         
-        deck1.add(new Card(0, Card.Type.TANK, "Taur", 12, 1, Card.Habbility.HEAL_SLF));
-        deck1.add(new Card(2, Card.Type.FIGHTER, "Abomination", 7, 5, Card.Habbility.DMG_UP));
-        deck1.add(new Card(4, Card.Type.SUPPORT, "Rafaela", 10, 1, Card.Habbility.HEAL_2));
-        deck1.add(new Card(1, Card.Type.MAGE, "Ciclops", 5, 2, Card.Habbility.STORM));
-        deck1.add(new Card(3, Card.Type.MARKSMAN, "Elf", 4, 6, Card.Habbility.DMG_CRIT));
+        player1.deck[0] = new Card(0, Card.Type.TANK, "Taur", 12, 1, Card.Habbility.HEAL_SLF);
+        player1.deck[1] = new Card(2, Card.Type.FIGHTER, "Abomination", 7, 5, Card.Habbility.DMG_UP);
+        player1.deck[2] = new Card(4, Card.Type.SUPPORT, "Rafaela", 10, 1, Card.Habbility.HEAL_2);
+        player1.deck[3] = new Card(1, Card.Type.MAGE, "Ciclops", 5, 2, Card.Habbility.STORM);
+        player1.deck[4] = new Card(3, Card.Type.MARKSMAN, "Elf", 4, 6, Card.Habbility.DMG_CRIT);
         
+        //-------------------------------------------------
         
+        Player player2 = new Player();
         
-        ArrayList<Card> deck2 = new ArrayList<Card>(5); 
-        
-        deck2.add(new Card(0, Card.Type.TANK, "Taur", 12, 1, Card.Habbility.HEAL_SLF));
-        deck2.add(new Card(2, Card.Type.FIGHTER, "Abomination", 7, 5, Card.Habbility.DMG_UP));
-        deck2.add(new Card(4, Card.Type.SUPPORT, "Rafaela", 10, 1, Card.Habbility.HEAL_2));
-        deck2.add(new Card(1, Card.Type.MAGE, "Ciclops", 5, 2, Card.Habbility.STORM));
-        deck2.add(new Card(3, Card.Type.MARKSMAN, "Elf", 4, 6, Card.Habbility.DMG_CRIT));
+        player2.deck[0] = new Card(0, Card.Type.TANK, "Taur", 12, 1, Card.Habbility.HEAL_SLF);
+        player2.deck[1] = new Card(2, Card.Type.FIGHTER, "Abomination", 7, 5, Card.Habbility.DMG_UP);
+        player2.deck[2] = new Card(4, Card.Type.SUPPORT, "Rafaela", 10, 1, Card.Habbility.HEAL_2);
+        player2.deck[3] = new Card(1, Card.Type.MAGE, "Ciclops", 5, 2, Card.Habbility.STORM);
+        player2.deck[4] = new Card(3, Card.Type.MARKSMAN, "Elf", 4, 6, Card.Habbility.DMG_CRIT);
         
         //--------------------------------------------------------
         
-        System.out.println("DECK 1");
-        System.out.println(deck1);
-        System.out.println("DECK 2");
-        System.out.println(deck2);
-        
-        
-        System.out.println();
-        System.out.println("-----------------------------");
-        System.out.println("ROUND 1");
-        System.out.println("-----------------------------");
-        
-        for (int i = 0; i < deck1.size(); i++) {
-            deck1.get(i).attack(deck1, deck2, deck2.get(0));
-        }
-        
-        //for (int i = 0; i < deck2.size(); i++) {
-        //    deck2.get(i).attack(deck2, deck1, deck1.get(0));
+        //for (int i = 0; i < deck1.length; i++) {
+        //    deck1[i].attack(deck2, deck2[0]);
         //}
+        
         
         //do {            
             
-            
+        //bank[0].attack(deck2, deck2, bank[0]);
             
         //} while (!deck1.isEmpty() || !deck2.isEmpty());
         
-        //deck1.get(0).attack(deck1, deck2, deck2.get(0));
-        //deck2.get(0).attack(deck2, deck1, deck1.get(0));
-        //deck1.get(1).attack(deck1, deck2, deck2.get(0));
-        //deck2.get(1).attack(deck2, deck1, deck1.get(0));
-        //deck1.get(2).attack(deck1, deck2, deck2.get(0));
-        //deck2.get(2).attack(deck2, deck1, deck1.get(0));
-        //deck1.get(3).attack(deck1, deck2, deck2.get(0));
-        //deck2.get(3).attack(deck2, deck1, deck1.get(0));
-        //deck1.get(4).attack(deck1, deck2, deck2.get(0));
-        //deck2.get(4).attack(deck2, deck1, deck1.get(0));
-        
-        
-        
-        
-        
-        
-        
-        
+        player1.showDeck();
+        player2.showDeck();
         
         System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-        System.out.println("DECK 1");
-        System.out.println(deck1);
-        System.out.println("DECK 2");
-        System.out.println(deck2);
+        System.out.println();
+        
+        do {            
+            int i = 0;
+            
+            if (player1.deck[i].dead == false) {
+                player1.deck[i].attack(player1.deck, player2.deck);
+            }
+            if (player2.deck[i].dead == false) {
+                player2.deck[i].attack(player2.deck, player1.deck);
+            }
+            
+            
+            i++;
+            
+        } while (player1.cardsLeft > 0 || player2.cardsLeft > 0);
+
     }
 }

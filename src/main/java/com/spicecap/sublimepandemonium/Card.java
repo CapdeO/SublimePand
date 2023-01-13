@@ -1,6 +1,5 @@
 
 package com.spicecap.sublimepandemonium;
-import java.util.ArrayList;
 import java.util.Random;
 
 
@@ -26,6 +25,8 @@ public class Card {
     //Son enteros para poder asignarles sangrado o aturdido por x turnos
     public int stuned;
     public int bleeding;
+    
+    public boolean dead;
     
     //Constructor 
     public Card(int id, Type type, String name, int hp, int atq, Habbility habbility) {
@@ -67,7 +68,11 @@ public class Card {
     }
     
     
-    public void attack(ArrayList deckOrig, ArrayList deckDest, Card cardDest) {
+    public void attack(Card[] deckOrig, Card[] deckDest) {
+        
+        boolean attackDone = false;
+        
+        int target = 0;
         
         int attackPoints = this.atq;
         
@@ -79,22 +84,31 @@ public class Card {
         }
         
         //Ataque básico
-        if (!this.isStuned()) {
-            
-            cardDest.hp -= attackPoints;
-            
-            System.out.println(this + " ATTACKED--> " + cardDest);
-            
-            if (cardDest.isDead()) { //Por si lo mata
-                System.out.println("Murió " + cardDest);
-                deckDest.remove(cardDest);
-            }    
-            else if (this.isDead()) { //Por si el ataque rebota y lo mata
-                System.out.println("Murió " + this);
-                deckOrig.remove(this);
+        do {            
+            if (deckDest[target].dead == true) {
+                target++;
+            } else {
+                if (!this.isStuned()) {
+
+                    deckDest[target].hp -= attackPoints;
+
+                    System.out.println(this + " ATTACKED--> " + deckDest[target]);
+
+                    if (deckDest[target].isDead()) { //Por si lo mata
+                        System.out.println("Murió " + deckDest[target]);
+                        deckDest[target].dead = true;
+                        attackDone = true;    
+                    }    
+                    else if (this.isDead()) { //Por si el ataque rebota y lo mata
+                        System.out.println("Murió " + this);
+                        this.dead = true;
+                        attackDone = true; 
+                    }
+                }
             }
-                
-        }
+        } while (attackDone == false);
+        
+            
 
         
         
