@@ -39,5 +39,49 @@ public class SublimePandemonium {
         System.out.println("DECK 2");
         System.out.println(deck2);
         
+        
+        System.out.println();
+        System.out.println("-----------------------------");
+        System.out.println("ROUND 1");
+        System.out.println("-----------------------------");
+        
+        for (int i = 0; i < deck1.size(); i++) {
+            deck1.get(i).attack(deck1, deck2, deck2.get(0));
+        }
+        
+        //for (int i = 0; i < deck2.size(); i++) {
+        //    deck2.get(i).attack(deck2, deck1, deck1.get(0));
+        //}
+        
+        //do {            
+            
+            
+            
+        //} while (!deck1.isEmpty() || !deck2.isEmpty());
+        
+        //deck1.get(0).attack(deck1, deck2, deck2.get(0));
+        //deck2.get(0).attack(deck2, deck1, deck1.get(0));
+        //deck1.get(1).attack(deck1, deck2, deck2.get(0));
+        //deck2.get(1).attack(deck2, deck1, deck1.get(0));
+        //deck1.get(2).attack(deck1, deck2, deck2.get(0));
+        //deck2.get(2).attack(deck2, deck1, deck1.get(0));
+        //deck1.get(3).attack(deck1, deck2, deck2.get(0));
+        //deck2.get(3).attack(deck2, deck1, deck1.get(0));
+        //deck1.get(4).attack(deck1, deck2, deck2.get(0));
+        //deck2.get(4).attack(deck2, deck1, deck1.get(0));
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        System.out.println("DECK 1");
+        System.out.println(deck1);
+        System.out.println("DECK 2");
+        System.out.println(deck2);
     }
 }

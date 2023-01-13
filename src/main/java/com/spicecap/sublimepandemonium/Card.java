@@ -37,14 +37,14 @@ public class Card {
         this.habbility = habbility;
     }
     
-    //@Override
-    //public String toString() {
-    //    return "[["+ name+" HP:"+hp+" ATT:"+atq+"]]";
-    //}
-    
-    public String showCard() {
-        return "[["+ this.name+" HP:"+this.hp+" ATT:"+this.atq+"]]";
+    @Override
+    public String toString() {
+        return "[["+ name+" HP:"+hp+" ATT:"+atq+"]]";
     }
+    
+    //public String showCard() {
+    //    return "[["+ this.name+" HP:"+this.hp+" ATT:"+this.atq+"]]";
+    //}
     
     
     public boolean isDead() {
@@ -69,8 +69,6 @@ public class Card {
     
     public void attack(ArrayList deckOrig, ArrayList deckDest, Card cardDest) {
         
-        System.out.println(this + " will attack " + cardDest);
-        
         int attackPoints = this.atq;
         
         if (this.habbility == Habbility.DMG_CRIT){
@@ -85,7 +83,7 @@ public class Card {
             
             cardDest.hp -= attackPoints;
             
-            System.out.println(this + " ATACÓ--> " + cardDest);
+            System.out.println(this + " ATTACKED--> " + cardDest);
             
             if (cardDest.isDead()) { //Por si lo mata
                 System.out.println("Murió " + cardDest);
