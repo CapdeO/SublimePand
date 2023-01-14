@@ -34,47 +34,20 @@ public class SublimePandemonium {
         
         //--------------------------------------------------------
         
-        //for (int i = 0; i < deck1.length; i++) {
-        //    deck1[i].attack(deck2, deck2[0]);
-        //}
-        
-        
-        //do {            
-            
-        //bank[0].attack(deck2, deck2, bank[0]);
-            
-        //} while (!deck1.isEmpty() || !deck2.isEmpty());
-        
         player1.showDeck();
         player2.showDeck();
         
         System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         System.out.println();
         
-        //player1.deck[0].attack(player1.deck, player2.deck);
-        
-        //player2.deck[0].attack(player2.deck, player1.deck);
-        
-        //player1.deck[1].attack(player1.deck, player2.deck);
-        
-        //player2.deck[1].attack(player2.deck, player1.deck);
-        
-        //player1.deck[2].attack(player1.deck, player2.deck);
-        
-        //player2.deck[2].attack(player2.deck, player1.deck);
-        
-        //player1.deck[3].attack(player1.deck, player2.deck);
-        
-        //player2.deck[3].attack(player2.deck, player1.deck);
-        
-        //player1.deck[4].attack(player1.deck, player2.deck);
-        
-        //player2.deck[4].attack(player2.deck, player1.deck);
-        
-        
-        
+        boolean flag = true;
         
         do { 
+            
+            if (flag == true) {
+                player2.deck[0].hp += 4;
+                flag = false;
+            }
             
             for (int i = 0; i < 5; i++) {
                 if (player1.deck[i].isDead() == false) 
@@ -104,5 +77,17 @@ public class SublimePandemonium {
         player1.showDeck();
         player2.showDeck();
         
+        if (player1.cardsLeft > player2.cardsLeft) {
+            System.out.println("Player 1 WINS!");
+            player1.winner = true;
+        }
+        else if (player1.cardsLeft < player2.cardsLeft) {
+            System.out.println("Player 2 WINS!");
+            player2.winner = true;
+        } 
+        else {
+            System.out.println("TIE!");
+        }
+            
     }
 }

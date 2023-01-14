@@ -8,6 +8,8 @@ public class Player {
     
     public int cardsLeft;
     
+    public boolean winner;
+    
     public Player() {
         this.cardsLeft = 5;
     }
