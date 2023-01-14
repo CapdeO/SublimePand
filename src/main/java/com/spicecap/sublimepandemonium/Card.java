@@ -97,12 +97,12 @@ public class Card {
                     attackDone = true;
                     
                     if (deckDest[target].isDead()) { //Por si lo mata
-                        System.out.println("Murió " + deckDest[target]);
+                        System.out.println("++X++ " + deckDest[target] + " DIED! ++X++");
                         deckDest[target].dead = true; 
                         
                     }    
                     else if (this.isDead()) { //Por si el ataque rebota y lo mata
-                        System.out.println("Murió " + this);
+                        System.out.println("++X++ " + this + " DIED! ++X++");
                         this.dead = true;
                     }
                 }

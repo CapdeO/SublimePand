@@ -41,8 +41,12 @@ public class SublimePandemonium {
         System.out.println();
         
         boolean flag = true;
+        int round = 0;
         
         do { 
+            
+            round++;
+            System.out.println("---------->>>>>>>>>>> ROUND " + round + " <<<<<<<<<<----------");
             
             if (flag == true) {
                 player2.deck[0].hp += 4;
@@ -72,7 +76,7 @@ public class SublimePandemonium {
         
         
         
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        System.out.println(">>>>>>>>>> BATTLE ENDED <<<<<<<<<<");
         System.out.println();
         player1.showDeck();
         player2.showDeck();
