@@ -99,6 +99,7 @@ public class Card {
                     if (deckDest[target].isDead()) { //Por si lo mata
                         System.out.println("Murió " + deckDest[target]);
                         deckDest[target].dead = true; 
+                        
                     }    
                     else if (this.isDead()) { //Por si el ataque rebota y lo mata
                         System.out.println("Murió " + this);

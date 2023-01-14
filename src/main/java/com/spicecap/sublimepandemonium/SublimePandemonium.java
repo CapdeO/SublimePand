@@ -71,42 +71,31 @@ public class SublimePandemonium {
         
         //player2.deck[4].attack(player2.deck, player1.deck);
         
-        do {            
+        
+        
+        
+        do { 
             
-            boolean p1AttackDone = false;
-            boolean p2AttackDone = false;
-            int i = 0;
-            int j = 0;
-            
-            do {                
-                
-                if (player1.deck[i].isDead() == false) {
+            for (int i = 0; i < 5; i++) {
+                if (player1.deck[i].isDead() == false) 
                     player1.deck[i].attack(player1.deck, player2.deck);
-                    p1AttackDone = true;
-                } else {
-                    i++;
-                }
-                
-            } while (p1AttackDone == false);
+                if (player2.deck[i].isDead() == false) 
+                    player2.deck[i].attack(player2.deck, player1.deck);
+            }
             
+            player1.cardsLeft = 5;
+            player2.cardsLeft = 5;
             
-            do {                
-                
-                if (player2.deck[j].isDead() == false) {
-                    player2.deck[j].attack(player2.deck, player1.deck);
-                    p2AttackDone = true;
-                } else {
-                    i++;
-                }
-                
-            } while (p2AttackDone == false);
+            for (int i = 0; i < 5; i++) {
+                if (player1.deck[i].dead == true) 
+                    player1.cardsLeft -= 1;
+                if (player2.deck[i].dead == true) 
+                    player2.cardsLeft -= 1;
+            }
             
-         
-            
-            p1AttackDone = false;
-            p2AttackDone = false;
-            
+             
         } while (player1.cardsLeft > 0 && player2.cardsLeft > 0);
+        
         
         
         
