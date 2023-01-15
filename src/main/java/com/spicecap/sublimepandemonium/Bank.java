@@ -12,6 +12,7 @@ public class Bank {
         new Card(2, Card.Type.FIGHTER, "Abomination", 7, 5, Card.Habbility.DMG_UP),
         new Card(3, Card.Type.MARKSMAN, "Elf", 4, 6, Card.Habbility.DMG_CRIT),
         new Card(4, Card.Type.SUPPORT, "Rafaela", 10, 1, Card.Habbility.HEAL_2),
+        new Card(5, Card.Type.MAGE, "Duende Malo", 5, 2, Card.Habbility.BLEED),
         };
     
     

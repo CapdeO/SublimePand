@@ -29,7 +29,7 @@ public class SublimePandemonium {
         player2.deck[0] = new Card(0, Card.Type.TANK, "Taur", 12, 1, Card.Habbility.HEAL_SLF);
         player2.deck[1] = new Card(2, Card.Type.FIGHTER, "Abomination", 7, 5, Card.Habbility.DMG_UP);
         player2.deck[2] = new Card(4, Card.Type.SUPPORT, "Rafaela", 10, 1, Card.Habbility.HEAL_2);
-        player2.deck[3] = new Card(1, Card.Type.MAGE, "Ciclops", 5, 2, Card.Habbility.STORM);
+        player2.deck[3] = new Card(5, Card.Type.MAGE, "Duende Malo", 5, 2, Card.Habbility.BLEED);
         player2.deck[4] = new Card(3, Card.Type.MARKSMAN, "Elf", 4, 6, Card.Habbility.DMG_CRIT);
         
         //--------------------------------------------------------
@@ -48,15 +48,15 @@ public class SublimePandemonium {
             round++;
             System.out.println("---------->>>>>>>>>>> ROUND " + round + " <<<<<<<<<<----------");
             
-            if (flag == true) {
+            if (flag) {
                 player2.deck[0].hp += 4;
                 flag = false;
             }
             
             for (int i = 0; i < 5; i++) {
-                if (player1.deck[i].isDead() == false) 
+                if (!player1.deck[i].isDead()) 
                     player1.deck[i].attack(player1.deck, player2.deck);
-                if (player2.deck[i].isDead() == false) 
+                if (!player2.deck[i].isDead()) 
                     player2.deck[i].attack(player2.deck, player1.deck);
             }
             
@@ -64,12 +64,29 @@ public class SublimePandemonium {
             player2.cardsLeft = 5;
             
             for (int i = 0; i < 5; i++) {
-                if (player1.deck[i].dead == true) 
-                    player1.cardsLeft -= 1;
-                if (player2.deck[i].dead == true) 
-                    player2.cardsLeft -= 1;
+                
+                if (player1.deck[i].bleeding > 0) {
+                    player1.deck[i].hp -= 2;
+                    player1.deck[i].bleeding -= 1;
+                    System.out.println("BLEEDING FOR " + player1.deck[i] + "!! (-2 HP)");
+                }
+                    
+                if (player2.deck[i].bleeding > 0) {
+                    player2.deck[i].hp -= 2;
+                    player2.deck[i].bleeding -= 1;
+                    System.out.println("BLEEDING FOR " + player2.deck[i] + "!! (-2 HP)");
+                }
             }
             
+            for (int i = 0; i < 5; i++) {
+                
+                if (player1.deck[i].dead) 
+                    player1.cardsLeft -= 1;
+                if (player2.deck[i].dead) 
+                    player2.cardsLeft -= 1;
+                
+            }
+        
              
         } while (player1.cardsLeft > 0 && player2.cardsLeft > 0);
         

@@ -70,6 +70,13 @@ public class Card {
     
     public void attack(Card[] deckOrig, Card[] deckDest) {
         
+        if (this.habbility == Habbility.DMG_UP) {
+            if (posibilidad() <= 30) {
+                this.atq += 2;
+                System.out.println("DAMAGE UP!!");
+            }
+        }
+        
         boolean attackDone = false;
         
         int target = 0;
@@ -77,15 +84,45 @@ public class Card {
         int attackPoints = this.atq;
         
         if (this.habbility == Habbility.DMG_CRIT){
-            if (posibilidad() <= 30) {
+            if (posibilidad() <= 25) {
                 attackPoints += 2;
                 System.out.println("CRITIC DAMAGE!!");
             }
         }
         
+        if (this.habbility == Habbility.HEAL_SLF) {
+            if (posibilidad() <= 30) {
+                this.hp += 2;
+                System.out.println(" + 2 HP!!");
+            }
+        }
+        
+        if (this.habbility == Habbility.BLEED) {
+            if (posibilidad() <= 25) {
+                
+                int[] array = new int[5];
+                int puntero = 0;
+                
+                for (int i = 0; i < 5; i++) {
+                    if (!deckDest[i].dead) {
+                        array[puntero] = i;
+                        puntero++;
+                    }
+                }
+                
+                Random ran = new Random();
+                int afortunado = ran.nextInt(puntero - 1) + 0;
+                
+                deckDest[array[afortunado]].bleeding = 2;
+                
+                System.out.println("BLEEDING CAUSED TO " + deckDest[array[afortunado]] + " FOR TWO TURNS!!");
+                
+            }
+        }
+        
         //Ataque básico
         do {            
-            if (deckDest[target].dead == true) {
+            if (deckDest[target].dead) {
                 target++;
             } else {
                 if (!this.isStuned()) {
@@ -107,7 +144,7 @@ public class Card {
                     }
                 }
             }
-        } while (attackDone == false);
+        } while (!attackDone);
         
             
 
