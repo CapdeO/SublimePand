@@ -90,6 +90,8 @@ public class Card {
             }
         }
         
+        
+        
         if (this.habbility == Habbility.HEAL_SLF) {
             if (posibilidad() <= 30) {
                 this.hp += 2;
@@ -124,12 +126,24 @@ public class Card {
             }
         }
         
+        
+        
         //Ataque básico
         do {            
             if (deckDest[target].dead) {
                 target++;
             } else {
                 if (!this.isStuned()) {
+                    
+                    if (deckDest[target].habbility == Habbility.DMG_RED) {
+                        if (posibilidad() <= 25) {
+                            attackPoints -= 2;
+                            if (attackPoints < 0) {
+                                attackPoints = 0;
+                            }
+                            System.out.println("DAMAGE REDUCTION!!");
+                        }
+                    }
 
                     deckDest[target].hp -= attackPoints;
 
