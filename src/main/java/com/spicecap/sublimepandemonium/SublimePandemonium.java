@@ -26,7 +26,7 @@ public class SublimePandemonium {
         
         Player player2 = new Player();
         
-        player2.deck[0] = new Card(6, Card.Type.TANK, "Monster", 10, 2, Card.Habbility.DMG_RED);
+        player2.deck[0] = new Card(0, Card.Type.TANK, "Taur", 12, 1, Card.Habbility.HEAL_SLF);
         player2.deck[1] = new Card(2, Card.Type.FIGHTER, "Abomination", 7, 5, Card.Habbility.DMG_UP);
         player2.deck[2] = new Card(4, Card.Type.SUPPORT, "Rafaela", 10, 1, Card.Habbility.HEAL_2);
         player2.deck[3] = new Card(5, Card.Type.MAGE, "Duende Malo", 5, 2, Card.Habbility.BLEED);

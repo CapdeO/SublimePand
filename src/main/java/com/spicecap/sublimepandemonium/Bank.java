@@ -13,7 +13,6 @@ public class Bank {
         new Card(3, Card.Type.MARKSMAN, "Elf", 4, 6, Card.Habbility.DMG_CRIT),
         new Card(4, Card.Type.SUPPORT, "Rafaela", 10, 1, Card.Habbility.HEAL_2),
         new Card(5, Card.Type.MAGE, "Duende Malo", 5, 2, Card.Habbility.BLEED),
-        new Card(6, Card.Type.TANK, "Monster", 10, 2, Card.Habbility.DMG_RED),
         };
     
     
