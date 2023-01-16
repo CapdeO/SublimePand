@@ -60,8 +60,7 @@ public class SublimePandemonium {
                     player2.deck[i].attack(player1.deck);
             }
             
-            player1.cardsLeft = 5;
-            player2.cardsLeft = 5;
+            
             
             for (int i = 0; i < 5; i++) {
                 
@@ -87,6 +86,9 @@ public class SublimePandemonium {
                     }
                 }
             }
+            
+            player1.cardsLeft = 5;
+            player2.cardsLeft = 5;
             
             for (int i = 0; i < 5; i++) {
                 
