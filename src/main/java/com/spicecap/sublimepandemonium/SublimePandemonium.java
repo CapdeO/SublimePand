@@ -55,9 +55,9 @@ public class SublimePandemonium {
             
             for (int i = 0; i < 5; i++) {
                 if (!player1.deck[i].isDead()) 
-                    player1.deck[i].attack(player1.deck, player2.deck);
+                    player1.deck[i].attack(player2.deck);
                 if (!player2.deck[i].isDead()) 
-                    player2.deck[i].attack(player2.deck, player1.deck);
+                    player2.deck[i].attack(player1.deck);
             }
             
             player1.cardsLeft = 5;
@@ -65,16 +65,26 @@ public class SublimePandemonium {
             
             for (int i = 0; i < 5; i++) {
                 
-                if (player1.deck[i].bleeding > 0) {
+                if (player1.deck[i].bleeding > 0 && !player1.deck[i].dead) {
                     player1.deck[i].hp -= 2;
                     player1.deck[i].bleeding -= 1;
                     System.out.println("BLEEDING FOR " + player1.deck[i] + "!! (-2 HP)");
+                    
+                    if (player1.deck[i].isDead()) { //Por si lo mata el sangrado
+                        System.out.println("++X++ " + player1.deck[i] + " DIED DUE TO BLEEDING! ++X++");
+                        player1.deck[i].dead = true; 
+                    } 
                 }
                     
-                if (player2.deck[i].bleeding > 0) {
+                if (player2.deck[i].bleeding > 0 && !player2.deck[i].dead) {
                     player2.deck[i].hp -= 2;
                     player2.deck[i].bleeding -= 1;
                     System.out.println("BLEEDING FOR " + player2.deck[i] + "!! (-2 HP)");
+                    
+                    if (player2.deck[i].isDead()) { //Por si lo mata el sangrado
+                        System.out.println("++X++ " + player2.deck[i] + " DIED DUE TO BLEEDING! ++X++");
+                        player2.deck[i].dead = true; 
+                    }
                 }
             }
             

@@ -68,7 +68,7 @@ public class Card {
     }
     
     
-    public void attack(Card[] deckOrig, Card[] deckDest) {
+    public void attack(Card[] deckDest) {
         
         if (this.habbility == Habbility.DMG_UP) {
             if (posibilidad() <= 30) {
@@ -98,7 +98,7 @@ public class Card {
         }
         
         if (this.habbility == Habbility.BLEED) {
-            if (posibilidad() <= 25) {
+            if (posibilidad() <= 35) {
                 
                 int[] array = new int[5];
                 int puntero = 0;
@@ -110,13 +110,17 @@ public class Card {
                     }
                 }
                 
-                Random ran = new Random();
-                int afortunado = ran.nextInt(puntero - 1) + 0;
+                puntero -= 1;
                 
-                deckDest[array[afortunado]].bleeding = 2;
-                
-                System.out.println("BLEEDING CAUSED TO " + deckDest[array[afortunado]] + " FOR TWO TURNS!!");
-                
+                if (puntero == 0) {
+                    deckDest[array[0]].bleeding = 2;
+                    System.out.println("BLEEDING CAUSED TO " + deckDest[array[0]] + " FOR TWO TURNS!!");
+                } else {
+                    Random ran = new Random();
+                    int afortunado = ran.nextInt(puntero) + 0;
+                    deckDest[array[afortunado]].bleeding = 2;
+                    System.out.println("BLEEDING CAUSED TO " + deckDest[array[afortunado]] + " FOR TWO TURNS!!");
+                }
             }
         }
         
@@ -172,18 +176,5 @@ public class Card {
     }
 
     //--------------------------------------------
-    
- 
-
-    
-
-    
-    
-   
-
-   
-
-    
-    
-    
+     
 }
