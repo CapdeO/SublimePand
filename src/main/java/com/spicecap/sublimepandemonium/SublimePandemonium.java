@@ -27,7 +27,7 @@ public class SublimePandemonium {
         Player player2 = new Player();
         
         player2.deck[0] = new Card(6, Card.Type.TANK, "Monster", 10, 2, Card.Habbility.DMG_RED);
-        player2.deck[1] = new Card(2, Card.Type.FIGHTER, "Abomination", 7, 5, Card.Habbility.DMG_UP);
+        player2.deck[1] = new Card(7, Card.Type.FIGHTER, "Gargoyle", 8, 3, Card.Habbility.DMG_REF);
         player2.deck[2] = new Card(4, Card.Type.SUPPORT, "Rafaela", 10, 1, Card.Habbility.HEAL_2);
         player2.deck[3] = new Card(5, Card.Type.MAGE, "Duende Malo", 5, 2, Card.Habbility.BLEED);
         player2.deck[4] = new Card(3, Card.Type.MARKSMAN, "Elf", 4, 6, Card.Habbility.DMG_CRIT);
@@ -57,7 +57,7 @@ public class SublimePandemonium {
                 
                 //TURNO CARTA DECK 1
                 if (!player1.deck[i].isDead() && !player1.deck[i].isStuned()) {
-                    player1.deck[i].attack(player2.deck);
+                    player1.deck[i].attack(player1.deck, player2.deck);
                 } else if (!player1.deck[i].isDead() && player1.deck[i].isStuned()) {
                     System.out.println(player1.deck[i] + " IS STUNED!");
                     player1.deck[i].stuned -= 1;
@@ -65,7 +65,7 @@ public class SublimePandemonium {
                   
                 //TURNO CARTA DECK 2
                 if (!player2.deck[i].isDead() && !player2.deck[i].isStuned()) {
-                    player2.deck[i].attack(player1.deck);
+                    player2.deck[i].attack(player2.deck, player1.deck);
                 } else if (!player2.deck[i].isDead() && player2.deck[i].isStuned()) {
                     System.out.println(player2.deck[i] + " IS STUNED!");
                     player2.deck[i].stuned -= 1;

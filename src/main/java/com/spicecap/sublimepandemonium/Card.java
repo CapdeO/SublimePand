@@ -68,7 +68,8 @@ public class Card {
     }
     
     
-    public void attack(Card[] deckDest) {
+    public void attack(Card[] deckOrig, Card[] deckDest) {
+        
         
         if (this.habbility == Habbility.DMG_UP) {
             if (posibilidad() <= 30) {
@@ -90,14 +91,59 @@ public class Card {
             }
         }
         
-        
+        // HABILIDADES BUFF ------------------------------
         
         if (this.habbility == Habbility.HEAL_SLF) {
             if (posibilidad() <= 30) {
-                this.hp += 2;
+                this.hp += 3;
                 System.out.println(" + 2 HP!!");
             }
         }
+        
+        if (this.habbility == Habbility.HEAL_2) {
+            if (posibilidad() <= 22) {
+                
+                int[] array = new int[5];
+                int puntero = 0;
+                
+                for (int i = 0; i < 5; i++) {
+                    if (!deckOrig[i].dead) {
+                        array[puntero] = i;
+                        puntero++;
+                    }
+                }
+                
+                puntero -= 1;
+                
+                if (puntero == 0) {
+                    deckOrig[array[0]].hp += 2;
+                    System.out.println("HEALING FOR " + deckOrig[array[0]] + " (+2HP)");
+                } else if (puntero == 1) {
+                    deckOrig[array[0]].hp += 2;
+                    System.out.println("HEALING FOR " + deckOrig[array[0]] + " (+2HP)");
+                    deckOrig[array[1]].hp += 2;
+                    System.out.println("HEALING FOR " + deckOrig[array[1]] + " (+2HP)");
+                } else {
+                    
+                    Random ran = new Random();
+                    int afortunado = ran.nextInt(puntero) + 0;
+                    int afortunado2;
+                    
+                    do {    
+                        afortunado2 = ran.nextInt(puntero) + 0;
+                    } while (afortunado2 == afortunado);
+                    
+                    deckOrig[array[afortunado]].hp += 2;
+                    deckOrig[array[afortunado2]].hp += 2;
+                    System.out.println("HEALING FOR " + deckOrig[afortunado] + " (+2HP)");
+                    System.out.println("HEALING FOR " + deckOrig[afortunado2] + " (+2HP)");
+                }
+                
+            }
+        }
+        
+        // HABILIDADES DEBUFF ----------------------------
+        
         
         if (this.habbility == Habbility.STUN) {
             if (posibilidad() <= 25) {
@@ -155,7 +201,7 @@ public class Card {
         
         
         
-        //Ataque básico
+        // ATAQUE BÁSICO --------------------------------
         do {            
             if (deckDest[target].dead) {
                 target++;
@@ -193,7 +239,7 @@ public class Card {
                     }
  
             }
-        } while (!attackDone);
+        } while (!attackDone && target < 5);
         
     }
     
