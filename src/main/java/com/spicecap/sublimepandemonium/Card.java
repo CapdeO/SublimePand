@@ -10,7 +10,7 @@ public class Card {
         TANK, FIGHTER, SUPPORT, MARKSMAN, MAGE, ASSASSIN
     }
     public enum Habbility {
-        BLEED, DMG_CRIT, DMG_RED, DMG_REF, DMG_UP, DODGE, HEAL_SLF, STORM, HEAL_2
+        BLEED, DMG_CRIT, DMG_RED, DMG_REF, DMG_UP, DODGE, HEAL_SLF, HEAL_2, STORM, STUN,
     }
     
     public int id;
@@ -90,10 +90,39 @@ public class Card {
             }
         }
         
+        
+        
         if (this.habbility == Habbility.HEAL_SLF) {
             if (posibilidad() <= 30) {
                 this.hp += 2;
                 System.out.println(" + 2 HP!!");
+            }
+        }
+        
+        if (this.habbility == Habbility.STUN) {
+            if (posibilidad() <= 25) {
+                
+                int[] array = new int[5];
+                int puntero = 0;
+                
+                for (int i = 0; i < 5; i++) {
+                    if (!deckDest[i].dead) {
+                        array[puntero] = i;
+                        puntero++;
+                    }
+                }
+                
+                puntero -= 1;
+                
+                if (puntero == 0) {
+                    deckDest[array[0]].stuned = 1;
+                    System.out.println("STUN CAUSED TO " + deckDest[array[0]] + " FOR ONE TURN!!");
+                } else {
+                    Random ran = new Random();
+                    int afortunado = ran.nextInt(puntero) + 0;
+                    deckDest[array[afortunado]].stuned = 2;
+                    System.out.println("STUN CAUSED TO " + deckDest[array[afortunado]] + " FOR ONE TURN!!");
+                }
             }
         }
         
@@ -124,12 +153,23 @@ public class Card {
             }
         }
         
+        
+        
         //Ataque básico
         do {            
             if (deckDest[target].dead) {
                 target++;
             } else {
-                if (!this.isStuned()) {
+                    
+                    if (deckDest[target].habbility == Habbility.DMG_RED) {
+                        if (posibilidad() <= 25) {
+                            attackPoints -= 2;
+                            if (attackPoints < 0) {
+                                attackPoints = 0;
+                            }
+                            System.out.println("DAMAGE REDUCTION!!");
+                        }
+                    }
 
                     deckDest[target].hp -= attackPoints;
 
@@ -146,14 +186,11 @@ public class Card {
                         System.out.println("++X++ " + this + " DIED! ++X++");
                         this.dead = true;
                     }
-                }
+                
             }
         } while (!attackDone);
         
             
-
-        
-        
     }
     
     
