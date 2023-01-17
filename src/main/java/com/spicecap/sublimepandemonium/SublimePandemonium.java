@@ -78,24 +78,23 @@ public class SublimePandemonium {
             for (int i = 0; i < 5; i++) {
                 
                 if (player1.deck[i].bleeding > 0 && !player1.deck[i].dead) {
+                    System.out.println("BLEEDING FOR " + player1.deck[i] + "!! (-2 HP)");
                     player1.deck[i].hp -= 2;
                     player1.deck[i].bleeding -= 1;
-                    System.out.println("BLEEDING FOR " + player1.deck[i] + "!! (-2 HP)");
                     
-                    if (player1.deck[i].isDead()) { //Por si lo mata el sangrado
-                        System.out.println("++X++ " + player1.deck[i] + " DIED DUE TO BLEEDING! ++X++");
-                        player1.deck[i].dead = true; 
-                    } 
+                    if (Card.checkDeath(player1.deck[i])) {
+                        System.out.println("(DUE TO BLEEDING)");
+                    }
+                    
                 }
                     
                 if (player2.deck[i].bleeding > 0 && !player2.deck[i].dead) {
+                    System.out.println("BLEEDING FOR " + player2.deck[i] + "!! (-2 HP)");
                     player2.deck[i].hp -= 2;
                     player2.deck[i].bleeding -= 1;
-                    System.out.println("BLEEDING FOR " + player2.deck[i] + "!! (-2 HP)");
                     
-                    if (player2.deck[i].isDead()) { //Por si lo mata el sangrado
-                        System.out.println("++X++ " + player2.deck[i] + " DIED DUE TO BLEEDING! ++X++");
-                        player2.deck[i].dead = true; 
+                    if (Card.checkDeath(player2.deck[i])) {
+                        System.out.println(" (DUE TO BLEEDING)");
                     }
                 }
             }

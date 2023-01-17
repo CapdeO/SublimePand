@@ -170,27 +170,31 @@ public class Card {
                             System.out.println("DAMAGE REDUCTION!!");
                         }
                     }
-
-                    deckDest[target].hp -= attackPoints;
-
-                    System.out.println(this + "@" + Integer.toHexString(this.hashCode()) + " ATTACKED--> " + deckDest[target] + "@" + Integer.toHexString(deckDest[target].hashCode()));
                     
-                    attackDone = true;
                     
-                    if (deckDest[target].isDead()) { //Por si lo mata
-                        System.out.println("++X++ " + deckDest[target] + " DIED! ++X++");
-                        deckDest[target].dead = true; 
-                        
-                    }    
-                    else if (this.isDead()) { //Por si el ataque rebota y lo mata
-                        System.out.println("++X++ " + this + " DIED! ++X++");
-                        this.dead = true;
+                    if (deckDest[target].habbility == Habbility.DMG_REF) {
+                        if (posibilidad() <= 25) {
+                            System.out.println("DAMAGE REFLECTION!!");
+                            this.hp -= attackPoints;
+                            System.out.println(this + "@" + Integer.toHexString(this.hashCode()) + " ATTACKED HIMSELF!!");
+                            attackDone = true;
+                            checkDeath(this);
+                        } else {
+                            deckDest[target].hp -= attackPoints;
+                            System.out.println(this + "@" + Integer.toHexString(this.hashCode()) + " ATTACKED--> " + deckDest[target] + "@" + Integer.toHexString(deckDest[target].hashCode()));
+                            attackDone = true;
+                            checkDeath(deckDest[target]);
+                        } 
+                    } else {
+                        deckDest[target].hp -= attackPoints;
+                        System.out.println(this + "@" + Integer.toHexString(this.hashCode()) + " ATTACKED--> " + deckDest[target] + "@" + Integer.toHexString(deckDest[target].hashCode()));
+                        attackDone = true;
+                        checkDeath(deckDest[target]);
                     }
-                
+ 
             }
         } while (!attackDone);
         
-            
     }
     
     
@@ -213,5 +217,15 @@ public class Card {
     }
 
     //--------------------------------------------
+    
+    public static boolean checkDeath(Card card) {
+        if (card.isDead()) {
+            System.out.println("++X++ " + card + " DIED! ++X++");
+            card.dead = true;
+            return true;
+        }
+        else
+            return false;
+    }
      
 }
