@@ -131,12 +131,12 @@ public class Card {
                     
                     do {    
                         afortunado2 = ran.nextInt(puntero) + 0;
-                    } while (afortunado2 == afortunado);
+                        } while (afortunado2 == afortunado);
                     
                     deckOrig[array[afortunado]].hp += 2;
                     deckOrig[array[afortunado2]].hp += 2;
-                    System.out.println("HEALING FOR " + deckOrig[afortunado] + " (+2HP)");
-                    System.out.println("HEALING FOR " + deckOrig[afortunado2] + " (+2HP)");
+                    System.out.println("HEALING FOR " + deckOrig[array[afortunado]] + " (+2HP)");
+                    System.out.println("HEALING FOR " + deckOrig[array[afortunado2]] + " (+2HP)");
                 }
                 
             }
