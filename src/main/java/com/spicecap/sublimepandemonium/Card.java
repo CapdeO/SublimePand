@@ -71,18 +71,13 @@ public class Card {
     public void attack(Card[] deckOrig, Card[] deckDest) {
         
         
+        int attackPoints = 0;
+        
         if (this.habbility == Habbility.DMG_UP) {
-            if (posibilidad() <= 30) {
-                this.atq += 2;
-                System.out.println("DAMAGE UP!!");
-            }
+            damageUp(this);
         }
         
-        boolean attackDone = false;
         
-        int target = 0;
-        
-        int attackPoints = this.atq;
         
         if (this.habbility == Habbility.DMG_CRIT){
             if (posibilidad() <= 25) {
@@ -202,6 +197,11 @@ public class Card {
         
         
         // ATAQUE BÁSICO --------------------------------
+        
+        attackPoints += this.atq;
+        int target = 0;
+        boolean attackDone = false;
+        
         do {            
             if (deckDest[target].dead) {
                 target++;
@@ -221,19 +221,19 @@ public class Card {
                     if (deckDest[target].habbility == Habbility.DMG_REF) {
                         if (posibilidad() <= 25) {
                             System.out.println("DAMAGE REFLECTION!!");
-                            this.hp -= attackPoints;
                             System.out.println(this + "@" + Integer.toHexString(this.hashCode()) + " ATTACKED HIMSELF!!");
+                            this.hp -= attackPoints;
                             attackDone = true;
                             checkDeath(this);
                         } else {
-                            deckDest[target].hp -= attackPoints;
                             System.out.println(this + "@" + Integer.toHexString(this.hashCode()) + " ATTACKED--> " + deckDest[target] + "@" + Integer.toHexString(deckDest[target].hashCode()));
+                            deckDest[target].hp -= attackPoints;
                             attackDone = true;
                             checkDeath(deckDest[target]);
                         } 
                     } else {
-                        deckDest[target].hp -= attackPoints;
                         System.out.println(this + "@" + Integer.toHexString(this.hashCode()) + " ATTACKED--> " + deckDest[target] + "@" + Integer.toHexString(deckDest[target].hashCode()));
+                        deckDest[target].hp -= attackPoints;
                         attackDone = true;
                         checkDeath(deckDest[target]);
                     }
@@ -243,8 +243,23 @@ public class Card {
         
     }
     
+    //----------------------------------------------------
+    //---------------------HABILIDADES--------------------
+    //----------------------------------------------------
+    
+    public static void damageUp(Card card) {
+        if (posibilidad() <= 30) {
+                card.atq += 2;
+                System.out.println("Damage up for " + card + " (2pt)");
+            }
+    }
+    
+    
+    
+    
     
     //--------------------------------------------
+    
     public static int posibilidadActual = 0;
     
     public static int[] posibilidades = new int[100];    
@@ -257,7 +272,7 @@ public class Card {
         }
     }
        
-    public int posibilidad() {
+    public static int posibilidad() {
         posibilidadActual++;
         return posibilidades[posibilidadActual-1];
     }

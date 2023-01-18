@@ -46,7 +46,7 @@ public class SublimePandemonium {
         do { 
             
             round++;
-            System.out.println("---------->>>>>>>>>>> ROUND " + round + " <<<<<<<<<<----------");
+            System.out.println("----------------->>>>>>>>>>> ROUND " + round + " <<<<<<<<<<-----------------");
             
             if (flag) {
                 player2.deck[0].hp += 4;
@@ -55,18 +55,24 @@ public class SublimePandemonium {
             
             for (int i = 0; i < 5; i++) {
                 
+                
+                
                 //TURNO CARTA DECK 1
                 if (!player1.deck[i].isDead() && !player1.deck[i].isStuned()) {
+                    System.out.println("---------------------------------------------");
                     player1.deck[i].attack(player1.deck, player2.deck);
                 } else if (!player1.deck[i].isDead() && player1.deck[i].isStuned()) {
+                    System.out.println("---------------------------------------------");
                     System.out.println(player1.deck[i] + " IS STUNED!");
                     player1.deck[i].stuned -= 1;
                 }
                   
                 //TURNO CARTA DECK 2
                 if (!player2.deck[i].isDead() && !player2.deck[i].isStuned()) {
+                    System.out.println("---------------------------------------------");
                     player2.deck[i].attack(player2.deck, player1.deck);
                 } else if (!player2.deck[i].isDead() && player2.deck[i].isStuned()) {
+                    System.out.println("---------------------------------------------");
                     System.out.println(player2.deck[i] + " IS STUNED!");
                     player2.deck[i].stuned -= 1;
                 }
