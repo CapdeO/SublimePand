@@ -87,7 +87,6 @@ public class Card {
         
         // HABILIDADES DEBUFF ----------------------------
         
-        
         if (this.habbility == Habbility.STUN) {
             if (posibilidad() <= 25) {
                 
@@ -260,11 +259,16 @@ public class Card {
         } 
     }
     
-    
-    
-    
-    
     // Habilidades debuff
+    
+    public static void stun(Card card, int turns) {
+        card.stuned += turns;
+        System.out.println("Stun caused to " + card + " ("+ turns + " turn(s))");
+    }
+    
+    public static void stun_1(Card card, int turns) {
+        
+    }
     
     
     
