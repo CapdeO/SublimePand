@@ -84,7 +84,8 @@ public class SublimePandemonium {
             for (int i = 0; i < 5; i++) {
                 
                 if (player1.deck[i].bleeding > 0 && !player1.deck[i].dead) {
-                    System.out.println("BLEEDING FOR " + player1.deck[i] + "!! (-2 HP)");
+                    System.out.println("---------------------------------------------");
+                    System.out.println("BLEEDING FOR " + player1.deck[i] + "@" + Integer.toHexString(player1.deck[i].hashCode()) + "!! (-2 HP)");
                     player1.deck[i].hp -= 2;
                     player1.deck[i].bleeding -= 1;
                     
@@ -95,7 +96,7 @@ public class SublimePandemonium {
                 }
                     
                 if (player2.deck[i].bleeding > 0 && !player2.deck[i].dead) {
-                    System.out.println("BLEEDING FOR " + player2.deck[i] + "!! (-2 HP)");
+                    System.out.println("BLEEDING FOR " + player2.deck[i] + "@" + Integer.toHexString(player2.deck[i].hashCode()) + "!! (-2 HP)");
                     player2.deck[i].hp -= 2;
                     player2.deck[i].bleeding -= 1;
                     
