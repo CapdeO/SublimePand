@@ -16,21 +16,21 @@ public class SublimePandemonium {
         //-------------------------------------------------
         Player player1 = new Player();
         
-        player1.deck[0] = new Card(0, Card.Type.TANK, "Taur", 12, 1, Card.Habbility.HEAL_SLF);
-        player1.deck[1] = new Card(2, Card.Type.FIGHTER, "Abomination", 7, 5, Card.Habbility.DMG_UP);
-        player1.deck[2] = new Card(4, Card.Type.SUPPORT, "Rafaela", 10, 1, Card.Habbility.HEAL_2);
-        player1.deck[3] = new Card(1, Card.Type.MAGE, "Ciclops", 5, 2, Card.Habbility.STUN);
-        player1.deck[4] = new Card(3, Card.Type.MARKSMAN, "Elf", 4, 6, Card.Habbility.DMG_CRIT);
+        player1.deck[0] = new Card(0, Card.Type.TANK, "Taur", 25, 3, Card.Habbility.HEAL_SLF_1);
+        player1.deck[1] = new Card(2, Card.Type.FIGHTER, "Abomination", 14, 5, Card.Habbility.DMG_UP_SLF_1);
+        player1.deck[2] = new Card(4, Card.Type.SUPPORT, "Rafaela", 22, 3, Card.Habbility.HEAL_TWO_1);
+        player1.deck[3] = new Card(1, Card.Type.MAGE, "Ciclops", 12, 3, Card.Habbility.STUN_ONE_1);
+        player1.deck[4] = new Card(3, Card.Type.MARKSMAN, "Elf", 12, 5, Card.Habbility.DMG_CRIT);
         
         //-------------------------------------------------
         
         Player player2 = new Player();
         
-        player2.deck[0] = new Card(6, Card.Type.TANK, "Monster", 10, 2, Card.Habbility.DMG_RED);
-        player2.deck[1] = new Card(7, Card.Type.FIGHTER, "Gargoyle", 8, 3, Card.Habbility.DMG_REF);
-        player2.deck[2] = new Card(4, Card.Type.SUPPORT, "Rafaela", 10, 1, Card.Habbility.HEAL_2);
-        player2.deck[3] = new Card(5, Card.Type.MAGE, "Duende Malo", 5, 2, Card.Habbility.BLEED);
-        player2.deck[4] = new Card(3, Card.Type.MARKSMAN, "Elf", 4, 6, Card.Habbility.DMG_CRIT);
+        player2.deck[0] = new Card(6, Card.Type.TANK, "Monster", 25, 3, Card.Habbility.DMG_RED_1);
+        player2.deck[1] = new Card(7, Card.Type.FIGHTER, "Gargoyle", 14, 6, Card.Habbility.DMG_REF_1);
+        player2.deck[2] = new Card(4, Card.Type.SUPPORT, "Rafaela", 22, 3, Card.Habbility.HEAL_TWO_1);
+        player2.deck[3] = new Card(5, Card.Type.MAGE, "Duende Malo", 12, 3, Card.Habbility.BLEED_ONE_1);
+        player2.deck[4] = new Card(3, Card.Type.MARKSMAN, "Elf", 12, 5, Card.Habbility.DMG_CRIT);
         
         //--------------------------------------------------------
         
@@ -46,7 +46,7 @@ public class SublimePandemonium {
         do { 
             
             round++;
-            System.out.println("----------------->>>>>>>>>>> ROUND " + round + " <<<<<<<<<<-----------------");
+            System.out.println("-------------------------------------------------->>>>>>>>>>>>>>>>>>>>>>>>> [[[ ROUND " + round + " ]]]");
             
             if (flag) {
                 player2.deck[0].hp += 4;

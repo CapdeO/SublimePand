@@ -10,7 +10,16 @@ public class Card {
         TANK, FIGHTER, SUPPORT, MARKSMAN, MAGE, ASSASSIN
     }
     public enum Habbility {
-        BLEED, DMG_CRIT, DMG_RED, DMG_REF, DMG_UP, DODGE, HEAL_SLF, HEAL_2, STORM, STUN,
+        BLEED_ONE_1,
+        DMG_CRIT,
+        DMG_RED_1,
+        DMG_REF_1,
+        DMG_UP_SLF_1,
+        DODGE, //FALTA
+        HEAL_SLF_1,
+        HEAL_TWO_1,
+        STORM, //FALTA
+        STUN_ONE_1,
     }
     
     public int id;
@@ -75,71 +84,22 @@ public class Card {
         
         // HABILIDADES BUFF ------------------------------
         
-        if (this.habbility == Habbility.DMG_UP) {
-            damageUp(this, 3);
-        } else if (this.habbility == Habbility.DMG_CRIT){
+        if (this.habbility == Habbility.DMG_UP_SLF_1) 
+            damageUpSelf1(this);
+        else if (this.habbility == Habbility.DMG_CRIT)
             attackPoints += damageCrit();
-        } else if (this.habbility == Habbility.HEAL_SLF) {
-            heal_self(this, 3);
-        } else if (this.habbility == Habbility.HEAL_2) {
-            heal_2(deckOrig);
-        }
-        
+        else if (this.habbility == Habbility.HEAL_SLF_1) 
+            healSelf1(this);
+        else if (this.habbility == Habbility.HEAL_TWO_1) 
+            healTwo1(deckOrig);
+            
         // HABILIDADES DEBUFF ----------------------------
         
-        if (this.habbility == Habbility.STUN) {
-            if (posibilidad() <= 25) {
-                
-                int[] array = new int[5];
-                int puntero = 0;
-                
-                for (int i = 0; i < 5; i++) {
-                    if (!deckDest[i].dead) {
-                        array[puntero] = i;
-                        puntero++;
-                    }
-                }
-                
-                puntero -= 1;
-                
-                if (puntero == 0) {
-                    deckDest[array[0]].stuned = 1;
-                    System.out.println("STUN CAUSED TO " + deckDest[array[0]] + " FOR ONE TURN!!");
-                } else {
-                    Random ran = new Random();
-                    int afortunado = ran.nextInt(puntero) + 0;
-                    deckDest[array[afortunado]].stuned = 2;
-                    System.out.println("STUN CAUSED TO " + deckDest[array[afortunado]] + " FOR ONE TURN!!");
-                }
-            }
-        }
+        else if (this.habbility == Habbility.STUN_ONE_1) 
+            stunOne1(deckDest);
+        else if (this.habbility == Habbility.BLEED_ONE_1) 
+            bleedOne1(deckDest);
         
-        if (this.habbility == Habbility.BLEED) {
-            if (posibilidad() <= 35) {
-                
-                int[] array = new int[5];
-                int puntero = 0;
-                
-                for (int i = 0; i < 5; i++) {
-                    if (!deckDest[i].dead) {
-                        array[puntero] = i;
-                        puntero++;
-                    }
-                }
-                
-                puntero -= 1;
-                
-                if (puntero == 0) {
-                    deckDest[array[0]].bleeding = 2;
-                    System.out.println("BLEEDING CAUSED TO " + deckDest[array[0]] + " FOR TWO TURNS!!");
-                } else {
-                    Random ran = new Random();
-                    int afortunado = ran.nextInt(puntero) + 0;
-                    deckDest[array[afortunado]].bleeding = 2;
-                    System.out.println("BLEEDING CAUSED TO " + deckDest[array[afortunado]] + " FOR TWO TURNS!!");
-                }
-            }
-        }
         
         
         
@@ -154,24 +114,26 @@ public class Card {
                 target++;
             } else {
                     
-                    if (deckDest[target].habbility == Habbility.DMG_RED) {
+                    if (deckDest[target].habbility == Habbility.DMG_RED_1) {
                         if (posibilidad() <= 25) {
                             attackPoints -= 2;
                             if (attackPoints < 0) {
                                 attackPoints = 0;
                             }
-                            System.out.println("DAMAGE REDUCTION!!");
+                            System.out.println("Damage reduction (2pt)");
                         }
                     }
                     
                     
-                    if (deckDest[target].habbility == Habbility.DMG_REF) {
-                        if (posibilidad() <= 25) {
-                            System.out.println("DAMAGE REFLECTION!!");
-                            System.out.println(this + "@" + Integer.toHexString(this.hashCode()) + " ATTACKED HIMSELF!!");
-                            this.hp -= attackPoints;
+                    if (deckDest[target].habbility == Habbility.DMG_REF_1) {
+                        if (posibilidad() <= 70) {
+                            System.out.println(this + "@" + Integer.toHexString(this.hashCode()) + " ATTACKED--> " + deckDest[target] + "@" + Integer.toHexString(deckDest[target].hashCode()));
+                            System.out.println("Damage reflection ("+ (int) Math.floor(attackPoints * 0.34) + "pt)");
+                            this.hp -= Math.floor(attackPoints * 0.34);
+                            deckDest[target].hp -= Math.round(attackPoints * 0.7);
                             attackDone = true;
                             checkDeath(this);
+                            checkDeath(deckDest[target]);
                         } else {
                             System.out.println(this + "@" + Integer.toHexString(this.hashCode()) + " ATTACKED--> " + deckDest[target] + "@" + Integer.toHexString(deckDest[target].hashCode()));
                             deckDest[target].hp -= attackPoints;
@@ -197,9 +159,13 @@ public class Card {
     // Habilidades buff
     
     public static void damageUp(Card card, int plus) {
+        System.out.println("Damage up for " + card + " (" + plus + "pt)");    
+        card.atq += plus;  
+    }
+    
+    public static void damageUpSelf1(Card card) {
         if (posibilidad() <= 30) {
-            System.out.println("Damage up for " + card + " (" + plus + "pt)");    
-            card.atq += plus;   
+            damageUp(card, 3);
         }
     }
     
@@ -217,13 +183,13 @@ public class Card {
         card.hp += plus;
     }
     
-    public static void heal_self(Card card, int plus) {
+    public static void healSelf1(Card card) {
         if (posibilidad() <= 30) {
-            heal(card, plus);
+            heal(card, 3);
         }
     }
     
-    public static void heal_2(Card[] deck) {
+    public static void healTwo1(Card[] deck) {
         if (posibilidad() <= 22) {
                 
             int[] array = new int[5];
@@ -266,8 +232,55 @@ public class Card {
         System.out.println("Stun caused to " + card + " ("+ turns + " turn(s))");
     }
     
-    public static void stun_1(Card card, int turns) {
-        
+    public static void stunOne1(Card[] deck) {
+        if (posibilidad() <= 20) {
+            int[] array = new int[5];
+            int puntero = 0;
+            for (int i = 0; i < 5; i++) {
+                if (!deck[i].dead) {
+                    array[puntero] = i;
+                    puntero++;
+                }
+            }   
+            puntero -= 1; 
+            if (puntero == 0) {
+                stun(deck[array[0]], 2);
+            } else if (puntero > 0) {
+                Random ran = new Random();
+                int afortunado = ran.nextInt(puntero) + 0;
+                stun(deck[array[afortunado]], 2);
+            }
+        }
+    }
+    
+    public static void bleed(Card card, int turns) {
+        card.bleeding += turns;
+        System.out.println("Bleeding caused to " + card + " ("+ turns + " turn(s))");
+    }
+    
+    public static void bleedOne1(Card[] deck) {
+        if (posibilidad() <= 35) {
+                
+            int[] array = new int[5];
+            int puntero = 0;
+                
+            for (int i = 0; i < 5; i++) {
+                if (!deck[i].dead) {
+                    array[puntero] = i;
+                    puntero++;
+                }
+            }
+                
+            puntero -= 1;
+                
+            if (puntero == 0) {
+                bleed(deck[array[0]], 2);
+            } else if (puntero > 0) {
+                Random ran = new Random();
+                int afortunado = ran.nextInt(puntero) + 0;
+                bleed(deck[array[afortunado]], 2);
+            }
+        }
     }
     
     
