@@ -15,7 +15,11 @@ public class Bank {
         new Card(5, Card.Type.MAGE, "Duende Malo", 5, 2, Card.Habbility.BLEED_ONE_1),
         new Card(6, Card.Type.TANK, "Monster", 10, 2, Card.Habbility.DMG_RED_1),
         new Card(7, Card.Type.FIGHTER, "Gargoyle", 8, 3, Card.Habbility.DMG_REF_1),
+        new Card(8, Card.Type.ASSASSIN, "Ninja", 12, 4, Card.Habbility.FINISH_1),
+        new Card(9, Card.Type.SUPPORT, "Angel", 22, 3, Card.Habbility.CLEAN_1),
         };
+    
+        // FALTA ACTUALIZAR !!
     
     
     public static Card[] getBank() {

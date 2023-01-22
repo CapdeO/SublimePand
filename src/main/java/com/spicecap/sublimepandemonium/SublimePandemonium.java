@@ -28,9 +28,9 @@ public class SublimePandemonium {
         
         player2.deck[0] = new Card(6, Card.Type.TANK, "Monster", 25, 3, Card.Habbility.DMG_RED_1);
         player2.deck[1] = new Card(7, Card.Type.FIGHTER, "Gargoyle", 14, 6, Card.Habbility.DMG_REF_1);
-        player2.deck[2] = new Card(4, Card.Type.SUPPORT, "Rafaela", 22, 3, Card.Habbility.HEAL_TWO_1);
+        player2.deck[2] = new Card(9, Card.Type.SUPPORT, "Angel", 22, 3, Card.Habbility.CLEAN_1);
         player2.deck[3] = new Card(5, Card.Type.MAGE, "Duende Malo", 12, 3, Card.Habbility.BLEED_ONE_1);
-        player2.deck[4] = new Card(3, Card.Type.MARKSMAN, "Elf", 12, 5, Card.Habbility.DMG_CRIT);
+        player2.deck[4] = new Card(8, Card.Type.ASSASSIN, "Ninja", 12, 4, Card.Habbility.FINISH_1);
         
         //--------------------------------------------------------
         
@@ -85,23 +85,23 @@ public class SublimePandemonium {
                 
                 if (player1.deck[i].bleeding > 0 && !player1.deck[i].dead) {
                     System.out.println("---------------------------------------------");
-                    System.out.println("BLEEDING FOR " + player1.deck[i] + "@" + Integer.toHexString(player1.deck[i].hashCode()) + "!! (-2 HP)");
+                    System.out.println("Bleeding for " + player1.deck[i] + "@" + Integer.toHexString(player1.deck[i].hashCode()) + "!! (-2hp)");
                     player1.deck[i].hp -= 2;
                     player1.deck[i].bleeding -= 1;
                     
                     if (Card.checkDeath(player1.deck[i])) {
-                        System.out.println("(DUE TO BLEEDING)");
+                        System.out.println("(Due to bleeding)");
                     }
                     
                 }
                     
                 if (player2.deck[i].bleeding > 0 && !player2.deck[i].dead) {
-                    System.out.println("BLEEDING FOR " + player2.deck[i] + "@" + Integer.toHexString(player2.deck[i].hashCode()) + "!! (-2 HP)");
+                    System.out.println("Bleeding for " + player2.deck[i] + "@" + Integer.toHexString(player2.deck[i].hashCode()) + "!! (-2hp)");
                     player2.deck[i].hp -= 2;
                     player2.deck[i].bleeding -= 1;
                     
                     if (Card.checkDeath(player2.deck[i])) {
-                        System.out.println(" (DUE TO BLEEDING)");
+                        System.out.println(" (Due to bleeding)");
                     }
                 }
             }

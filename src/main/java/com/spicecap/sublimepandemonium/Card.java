@@ -11,15 +11,17 @@ public class Card {
     }
     public enum Habbility {
         BLEED_ONE_1,
+        CLEAN_1, // FALTA ASIGNAR
         DMG_CRIT,
         DMG_RED_1,
         DMG_REF_1,
         DMG_UP_SLF_1,
-        DODGE, 
-        FIRE_ONE_1, //FALTA, QUEMA DESPUES DE SU TURNO
+        DODGE_1,  // FALTA ASIGNAR
+        FINISH_1,  
+        FIRE_ONE_1, 
         HEAL_SLF_1,
         HEAL_TWO_1,
-        THUNDER_ONE_1, //FALTA
+        THUNDER_ONE_1,  // FALTA ASIGNAR
         STUN_ONE_1,
     }
     
@@ -35,6 +37,7 @@ public class Card {
     //Son enteros para poder asignarles sangrado o aturdido por x turnos
     public int stuned;
     public int bleeding;
+    public int fire;
     
     public boolean dead;
     
@@ -77,15 +80,36 @@ public class Card {
             return true;
     }
     
+    public boolean isBurning() {
+        if (this.fire == 0) 
+            return false;
+        else 
+            return true;
+    }
+    
     
     public void attack(Card[] deckOrig, Card[] deckDest) {
         
         
         int attackPoints = 0;
         
+        // HABILIDADES DE DAÑO DIRECTO--------------------
+        
+        if (this.habbility == Habbility.THUNDER_ONE_1) 
+            thunderOne(deckDest, 20, 3);
+        else if (this.habbility == Habbility.FIRE_ONE_1) 
+            fireOne(deckDest, 25, 3);
+        else if (this.habbility == Habbility.FINISH_1) 
+            finishOne(deckDest, 25, 7);
+        
+        
+        
+        
+        
+        
         // HABILIDADES BUFF ------------------------------
         
-        if (this.habbility == Habbility.DMG_UP_SLF_1) 
+        else if (this.habbility == Habbility.DMG_UP_SLF_1) 
             damageUpSelf(this, 30, 3);
         else if (this.habbility == Habbility.DMG_CRIT)
             attackPoints += damageCrit();
@@ -93,6 +117,9 @@ public class Card {
             healSelf(this, 30, 3);
         else if (this.habbility == Habbility.HEAL_TWO_1) 
             healTwo(deckOrig, 22, 3);
+        else if (this.habbility == Habbility.CLEAN_1) 
+            cleanOne(deckOrig, 50);
+        
             
         // HABILIDADES DEBUFF ----------------------------
         
@@ -116,13 +143,9 @@ public class Card {
             } else {
                     
                 if (deckDest[target].habbility == Habbility.DMG_RED_1) {
-                    if (posibilidad() <= 25) {
-                        attackPoints -= 2;
-                        if (attackPoints < 0) {
-                            attackPoints = 0;
-                        }
-                        System.out.println("Damage reduction (2pt)");
-                    }
+                    attackPoints -= damageReduc(25, 2);
+                    if (attackPoints < 0) 
+                        attackPoints = 0;
                 }   
                     
                 if (deckDest[target].habbility == Habbility.DMG_REF_1) {
@@ -136,7 +159,7 @@ public class Card {
                         basicAttack(this, deckDest[target], attackPoints);
                         attackDone = true;
                     } 
-                } else if (deckDest[target].habbility == Habbility.DODGE) {
+                } else if (deckDest[target].habbility == Habbility.DODGE_1) {
                     if (posibilidad() <= 20) {
                         System.out.println(this + "@" + Integer.toHexString(this.hashCode()) + " ATTACKED--> " + deckDest[target] + "@" + Integer.toHexString(deckDest[target].hashCode()));
                         System.out.println("But " + deckDest[target] + " dodged his attack");
@@ -153,6 +176,13 @@ public class Card {
             }
         } while (!attackDone && target < 5);
         
+        if (this.fire > 0) {
+            System.out.println("Fire for " + this + "(-2hp");
+            this.hp -= 2;
+            this.fire -= 1;
+            if (checkDeath(this)) 
+                System.out.println("Died due to fire");
+        }
     }
     
     //----------------------------------------------------
@@ -185,6 +215,60 @@ public class Card {
                 int afortunado = ran.nextInt(puntero) + 0;
                 thunder(deck[array[afortunado]], points);
             }
+        }
+    }
+    
+    public static void fire(Card card, int turns) {
+        card.fire += turns;
+        System.out.println("Fire caused to " + card + " ("+ turns + " turn(s))");
+    }
+    
+    public static void fireOne(Card[] deck, int chance, int turns) {
+        if (posibilidad() <= chance) {
+            int[] array = new int[5];
+            int puntero = 0;
+            for (int i = 0; i < 5; i++) {
+                if (!deck[i].dead) {
+                    array[puntero] = i;
+                    puntero++;
+                }
+            }   
+            puntero -= 1; 
+            if (puntero == 0) {
+                fire(deck[array[0]], turns);
+            } else if (puntero > 0) {
+                Random ran = new Random();
+                int afortunado = ran.nextInt(puntero) + 0;
+                fire(deck[array[afortunado]], turns);
+            }
+        }
+    }
+    
+    public static void finish(Card card, int points) {
+        System.out.println("Attempt to finish " + card + "(With " + points + " attack pts)");
+        card.hp -= points;
+        checkDeath(card);
+    }
+    
+    public static void finishOne(Card[] deck, int chance, int points) {
+        if (posibilidad() <= chance) {
+            int menorHp = 0;
+            boolean firstFound = false;
+            
+            do {      
+                if (deck[menorHp].dead) 
+                    menorHp++;
+                else
+                    firstFound = true;
+            } while (!firstFound);
+            
+            
+            for (int i = menorHp; i < 4; i++) {
+                if ((deck[i+1].hp < deck[menorHp].hp) && (!deck[i+1].dead) ) {
+                    menorHp = i+1;
+                }
+            }
+            finish(deck[menorHp], points);
         }
     }
     
@@ -260,6 +344,35 @@ public class Card {
         } 
     }
     
+    public static void clean(Card card) {
+        card.bleeding = 0;
+        card.fire = 0;
+        card.stuned = 0;
+        System.out.println(card + " is now clean");
+    }
+    
+    public static void cleanOne(Card[] deck, int chance) {
+        int[] array = new int[5];
+        int puntero = 0;
+        
+        for (int i = 0; i < 5; i++) {
+            if (deck[i].isStuned() || deck[i].isBleeding() || deck[i].isBurning()) {
+                array[puntero] = i;
+                puntero++;
+            }
+        }
+        
+        puntero -= 1;
+                
+        if (puntero == 0) {
+            clean(deck[array[0]]);
+        } else if (puntero > 0) {
+            Random ran = new Random();
+            int afortunado = ran.nextInt(puntero) + 0;
+            clean(deck[array[afortunado]]);
+        }   
+    }
+    
     // Habilidades debuff
     
     public static void stun(Card card, int turns) {
@@ -317,6 +430,21 @@ public class Card {
             }
         }
     }
+    
+    
+    
+    // Otras habilidades
+    
+    public static int damageReduc(int chance, int points) {
+        if (posibilidad() <= chance) {
+            System.out.println("Damage reduction ("+ points + "pt)");
+            return points;
+        } 
+        else 
+            return 0;
+    }
+    
+    
     
     
     //--------------------------------------------
