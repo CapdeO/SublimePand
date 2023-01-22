@@ -91,11 +91,11 @@ public class Card {
     
     public void attack(Card[] deckOrig, Card[] deckDest) {
         
-      if (!checkEmptyDeck(deckDest)) {
-            
         int attackPoints = 0;
         
-        // HABILIDADES DE DAÑO DIRECTO--------------------
+      if (!checkEmptyDeck(deckDest)) {
+            
+    // HABILIDADES DE DAÑO DIRECTO--------------------
         
         if (this.habbility == Habbility.THUNDER_ONE_1) 
             thunderOne(deckDest, 20, 3);
@@ -109,7 +109,7 @@ public class Card {
         
         
         
-        // HABILIDADES BUFF ------------------------------
+    // HABILIDADES BUFF ------------------------------
         
         else if (this.habbility == Habbility.DMG_UP_SLF_1) 
             damageUpSelf(this, 30, 3);
@@ -123,7 +123,7 @@ public class Card {
             cleanOne(deckOrig, 50);
         
             
-        // HABILIDADES DEBUFF ----------------------------
+    // HABILIDADES DEBUFF ----------------------------
         
         else if (this.habbility == Habbility.STUN_ONE_1) 
             stunOne(deckDest, 20, 2);
@@ -131,9 +131,10 @@ public class Card {
             bleedOne(deckDest, 35, 2);
         
         
-        
-        
-        // ATAQUE BÁSICO --------------------------------
+      }
+      if (!checkEmptyDeck(deckDest)) {
+          
+    // ATAQUE BÁSICO --------------------------------
         
         attackPoints += this.atq;
         int target = 0;
@@ -178,6 +179,8 @@ public class Card {
             }
         } while (!attackDone && target < 5);
         
+      }
+        
         if (this.fire > 0) {
             System.out.println("Fire for " + this + "(-2hp");
             this.hp -= 2;
@@ -185,7 +188,7 @@ public class Card {
             if (checkDeath(this)) 
                 System.out.println("Due to fire");
         }
-      }
+      
     }
     
     //----------------------------------------------------
