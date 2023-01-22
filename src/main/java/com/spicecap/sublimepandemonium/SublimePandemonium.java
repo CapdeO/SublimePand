@@ -2,6 +2,9 @@
 
 package com.spicecap.sublimepandemonium;
 
+import static com.spicecap.sublimepandemonium.Player.checkEmptyDeck;
+import static com.spicecap.sublimepandemonium.Player.deathsCount;
+
 
 
 public class SublimePandemonium {
@@ -106,20 +109,8 @@ public class SublimePandemonium {
                 }
             }
             
-            player1.cardsLeft = 5;
-            player2.cardsLeft = 5;
             
-            for (int i = 0; i < 5; i++) {
-                
-                if (player1.deck[i].dead) 
-                    player1.cardsLeft -= 1;
-                if (player2.deck[i].dead) 
-                    player2.cardsLeft -= 1;
-                
-            }
-        
-             
-        } while (player1.cardsLeft > 0 && player2.cardsLeft > 0);
+        } while (!checkEmptyDeck(player1.deck) && !checkEmptyDeck(player2.deck));
         
         
         
@@ -129,11 +120,11 @@ public class SublimePandemonium {
         player1.showDeck();
         player2.showDeck();
         
-        if (player1.cardsLeft > player2.cardsLeft) {
+        if (deathsCount(player1.deck) < deathsCount(player2.deck)) {
             System.out.println("Player 1 WINS!");
             player1.winner = true;
         }
-        else if (player1.cardsLeft < player2.cardsLeft) {
+        else if (deathsCount(player1.deck) > deathsCount(player2.deck)) {
             System.out.println("Player 2 WINS!");
             player2.winner = true;
         } 

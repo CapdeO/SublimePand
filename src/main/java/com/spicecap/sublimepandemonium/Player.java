@@ -4,14 +4,13 @@ package com.spicecap.sublimepandemonium;
 
 public class Player {
     
-    public Card[] deck = new Card[5];
+    public int[] refDeck = new int[5];
     
-    public int cardsLeft;
+    public Card[] deck = new Card[5];
     
     public boolean winner;
     
     public Player() {
-        this.cardsLeft = 5;
     }
     
     public void showDeck() {
@@ -23,4 +22,20 @@ public class Player {
         System.out.println();
     }
     
+    public static int deathsCount(Card[] deck) {
+        int count = 0;
+        for (int i = 0; i < 5; i++) {
+            if (deck[i].dead) {
+                count++;
+            }
+        }
+        return count;
+    }
+    
+    public static boolean checkEmptyDeck(Card[] deck) {
+        if (deathsCount(deck) == 5) 
+            return true;
+        else
+            return false;
+    }
 }

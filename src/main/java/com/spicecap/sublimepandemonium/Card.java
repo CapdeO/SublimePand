@@ -1,6 +1,7 @@
 
 package com.spicecap.sublimepandemonium;
 import java.util.Random;
+import static com.spicecap.sublimepandemonium.Player.checkEmptyDeck;
 
 
 
@@ -90,7 +91,8 @@ public class Card {
     
     public void attack(Card[] deckOrig, Card[] deckDest) {
         
-        
+      if (!checkEmptyDeck(deckDest)) {
+            
         int attackPoints = 0;
         
         // HABILIDADES DE DAÑO DIRECTO--------------------
@@ -181,8 +183,9 @@ public class Card {
             this.hp -= 2;
             this.fire -= 1;
             if (checkDeath(this)) 
-                System.out.println("Died due to fire");
+                System.out.println("Due to fire");
         }
+      }
     }
     
     //----------------------------------------------------
