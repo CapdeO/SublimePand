@@ -4,6 +4,8 @@ package com.spicecap.sublimepandemonium;
 
 import static com.spicecap.sublimepandemonium.Player.checkEmptyDeck;
 import static com.spicecap.sublimepandemonium.Player.deathsCount;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 
@@ -19,21 +21,45 @@ public class SublimePandemonium {
         //-------------------------------------------------
         Player player1 = new Player();
         
-        player1.deck[0] = new Card(0, Card.Type.TANK, "Taur", 25, 3, Card.Habbility.HEAL_SLF_1);
-        player1.deck[1] = new Card(2, Card.Type.FIGHTER, "Abomination", 14, 5, Card.Habbility.DMG_UP_SLF_1);
-        player1.deck[2] = new Card(4, Card.Type.SUPPORT, "Rafaela", 22, 3, Card.Habbility.HEAL_TWO_1);
-        player1.deck[3] = new Card(1, Card.Type.MAGE, "Ciclops", 12, 3, Card.Habbility.STUN_ONE_1);
-        player1.deck[4] = new Card(3, Card.Type.MARKSMAN, "Elf", 12, 5, Card.Habbility.DMG_CRIT);
+        player1.refDeck[0] = 0;
+        player1.refDeck[1] = 2;
+        player1.refDeck[2] = 9;
+        player1.refDeck[3] = 3;
+        player1.refDeck[4] = 1;
+        
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < bank.length; j++) {
+                if (player1.refDeck[i] == bank[j].id) {
+                    try {
+                        player1.deck[i] = (Card)bank[j].clone();
+                    } catch (CloneNotSupportedException ex) {
+                        Logger.getLogger(SublimePandemonium.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        }
         
         //-------------------------------------------------
         
         Player player2 = new Player();
         
-        player2.deck[0] = new Card(6, Card.Type.TANK, "Monster", 25, 3, Card.Habbility.DMG_RED_1);
-        player2.deck[1] = new Card(7, Card.Type.FIGHTER, "Gargoyle", 14, 6, Card.Habbility.DMG_REF_1);
-        player2.deck[2] = new Card(9, Card.Type.SUPPORT, "Angel", 22, 3, Card.Habbility.CLEAN_1);
-        player2.deck[3] = new Card(5, Card.Type.MAGE, "Duende Malo", 12, 3, Card.Habbility.BLEED_ONE_1);
-        player2.deck[4] = new Card(8, Card.Type.ASSASSIN, "Ninja", 12, 4, Card.Habbility.FINISH_1);
+        player2.refDeck[0] = 6;
+        player2.refDeck[1] = 7;
+        player2.refDeck[2] = 4;
+        player2.refDeck[3] = 5;
+        player2.refDeck[4] = 8;
+        
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < bank.length; j++) {
+                if (player2.refDeck[i] == bank[j].id) {
+                    try {
+                        player2.deck[i] = (Card)bank[j].clone();
+                    } catch (CloneNotSupportedException ex) {
+                        Logger.getLogger(SublimePandemonium.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        }
         
         //--------------------------------------------------------
         

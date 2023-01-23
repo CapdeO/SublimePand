@@ -1,11 +1,10 @@
 
 package com.spicecap.sublimepandemonium;
 import java.util.Random;
-import static com.spicecap.sublimepandemonium.Player.checkEmptyDeck;
 
 
 
-public class Card {
+public class Card implements Cloneable{
     
     public enum Type {
         TANK, FIGHTER, SUPPORT, MARKSMAN, MAGE, ASSASSIN
@@ -61,6 +60,12 @@ public class Card {
     //    return "[["+ this.name+" HP:"+this.hp+" ATT:"+this.atq+"]]";
     //}
     
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        Card copia = new Card (this.id, this.type, this.name, this.hp, this.atq, this.habbility);
+        return copia;
+    }
+    
     
     public boolean isDead() {
         if (this.hp <= 0) 
@@ -91,11 +96,10 @@ public class Card {
     
     public void attack(Card[] deckOrig, Card[] deckDest) {
         
+        
         int attackPoints = 0;
         
-      if (!checkEmptyDeck(deckDest)) {
-            
-    // HABILIDADES DE DAÑO DIRECTO--------------------
+        // HABILIDADES DE DAÑO DIRECTO--------------------
         
         if (this.habbility == Habbility.THUNDER_ONE_1) 
             thunderOne(deckDest, 20, 3);
@@ -109,7 +113,7 @@ public class Card {
         
         
         
-    // HABILIDADES BUFF ------------------------------
+        // HABILIDADES BUFF ------------------------------
         
         else if (this.habbility == Habbility.DMG_UP_SLF_1) 
             damageUpSelf(this, 30, 3);
@@ -123,7 +127,7 @@ public class Card {
             cleanOne(deckOrig, 50);
         
             
-    // HABILIDADES DEBUFF ----------------------------
+        // HABILIDADES DEBUFF ----------------------------
         
         else if (this.habbility == Habbility.STUN_ONE_1) 
             stunOne(deckDest, 20, 2);
@@ -131,10 +135,9 @@ public class Card {
             bleedOne(deckDest, 35, 2);
         
         
-      }
-      if (!checkEmptyDeck(deckDest)) {
-          
-    // ATAQUE BÁSICO --------------------------------
+        
+        
+        // ATAQUE BÁSICO --------------------------------
         
         attackPoints += this.atq;
         int target = 0;
@@ -179,8 +182,6 @@ public class Card {
             }
         } while (!attackDone && target < 5);
         
-      }
-        
         if (this.fire > 0) {
             System.out.println("Fire for " + this + "(-2hp");
             this.hp -= 2;
@@ -188,7 +189,6 @@ public class Card {
             if (checkDeath(this)) 
                 System.out.println("Due to fire");
         }
-      
     }
     
     //----------------------------------------------------
@@ -257,6 +257,7 @@ public class Card {
     }
     
     public static void finishOne(Card[] deck, int chance, int points) {
+      if (!Player.checkEmptyDeck(deck)) {
         if (posibilidad() <= chance) {
             int menorHp = 0;
             boolean firstFound = false;
@@ -276,6 +277,7 @@ public class Card {
             }
             finish(deck[menorHp], points);
         }
+      }
     }
     
     
