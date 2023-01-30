@@ -10,19 +10,53 @@ public class Card implements Cloneable{
         TANK, FIGHTER, SUPPORT, MARKSMAN, MAGE, ASSASSIN
     }
     public enum Habbility {
-        BLEED_ONE_1,
-        CLEAN_1, // FALTA ASIGNAR
-        DMG_CRIT,
-        DMG_RED_1,
-        DMG_REF_1,
-        DMG_UP_SLF_1,
-        DODGE_1,  // FALTA ASIGNAR
-        FINISH_1,  
-        FIRE_ONE_1, 
-        HEAL_SLF_1,
-        HEAL_TWO_1,
-        THUNDER_ONE_1,  // FALTA ASIGNAR
-        STUN_ONE_1,
+        BLEED_ONE_1,      // %35 chance - 2 turns
+        BLEED_ONE_2,      // %25 chance - 4 turns
+        BLEED_TWO_1,      // %30 chance - 2 turns
+        BLEED_TWO_2,      // %25 chance - 3 turns
+        
+        CLEAN_ONE_1,      // % chance -  turns
+        CLEAN_ONE_2,      // % chance -  turns
+        CLEAN_TWO_1,      // % chance -  turns
+        CLEAN_TWO_2,      // % chance -  turns
+        
+        DMG_CRIT_1,       // % chance -  turns
+        DMG_CRIT_2,       // % chance -  turns
+        
+        DMG_RED_1,        // % chance -  turns
+        DMG_RED_2,        // % chance -  turns
+        
+        DMG_REF_1,        // % chance -  turns
+        DMG_REF_2,        // % chance -  turns
+        
+        DMG_UP_SLF_1,     // % chance -  turns
+        DMG_UP_SLF_2,     // % chance -  turns
+        
+        DODGE_1,          // % chance -  turns
+        DODGE_2,          // % chance -  turns
+        
+        FINISH_1,         // % chance -  turns
+        FINISH_2,         // % chance -  turns
+        
+        FIRE_ONE_1,       // %35 chance - 3 turns
+        FIRE_ONE_2,       // %30 chance - 4 turns
+        
+        HEAL_SLF_1,       // % chance -  turns
+        HEAL_SLF_2,       // % chance -  turns
+        
+        HEAL_TWO_1,       // % chance -  turns
+        HEAL_TWO_2,       // % chance -  turns
+        
+        THUNDER_ONE_1,    // %25 chance - 5 pts
+        THUNDER_ONE_2,    // %30 chance - 4 pts
+        THUNDER_TWO_1,    // %20 chance - 3 pts
+        THUNDER_TWO_2,    // %30 chance - 2 pts
+        
+        STUN_ONE_1,       // % chance -  turns
+        STUN_ONE_2,       // % chance -  turns
+        
+        STUN_TWO_1,       // % chance -  turns
+        STUN_TWO_2,       // % chance -  turns
     }
     
     public int id;
@@ -87,19 +121,26 @@ public class Card implements Cloneable{
         
         switch (this.habbility) {
         // DAMAGE---------------    
-            case THUNDER_ONE_1 -> thunderOne(deckDest, 20, 3);
-            case FIRE_ONE_1 -> fireOne(deckDest, 25, 3);
+            case THUNDER_ONE_1 -> thunderOne(deckDest, 25, 5);
+            case THUNDER_ONE_2 -> thunderOne(deckDest, 30, 4);
+            case THUNDER_TWO_1 -> thunderTwo(deckDest, 20, 3);
+            case THUNDER_TWO_2 -> thunderTwo(deckDest, 30, 2);
+            
             case FINISH_1 -> finishOne(deckDest, 25, 7);
         // BUFF --------------    
             case DMG_UP_SLF_1 -> damageUpSelf(this, 30, 3);
-            case DMG_CRIT -> attackPoints += damageCrit();
+            case DMG_CRIT_1 -> attackPoints += damageCrit(25, 3);
             case HEAL_SLF_1 -> healSelf(this, 30, 3);
             case HEAL_TWO_1 -> healTwo(deckOrig, 22, 3);
-            case CLEAN_1 -> cleanOne(deckOrig, 50);
+            case CLEAN_ONE_1 -> cleanOne(deckOrig, 50);
         // DEBUFF -------------    
             case STUN_ONE_1 -> stunOne(deckDest, 20, 2);
-            case BLEED_ONE_1 -> bleedOne(deckDest, 35, 2);
-                
+            case BLEED_ONE_1 -> bleedOne(deckDest, 40, 2);
+            case BLEED_ONE_2 -> bleedOne(deckDest, 30, 4);
+            case BLEED_TWO_1 -> bleedTwo(deckDest, 30, 2);
+            case BLEED_TWO_2 -> bleedTwo(deckDest, 25, 3);
+            case FIRE_ONE_1 -> fireOne(deckDest, 35, 3);   
+            case FIRE_ONE_2 -> fireOne(deckDest, 30, 4);
                 
         }
         
@@ -199,6 +240,42 @@ public class Card implements Cloneable{
         }
     }
     
+    public static void thunderTwo(Card[] deck, int chance, int points) {
+        if (posibilidad() <= chance) {
+                
+            int[] array = new int[5];
+            int puntero = 0;
+                
+            for (int i = 0; i < 5; i++) {
+                if (!deck[i].dead) {
+                    array[puntero] = i;
+                    puntero++;
+                }
+            }
+                
+            puntero -= 1;
+                
+            if (puntero == 0) {
+                thunder(deck[array[0]], points);
+            } else if (puntero == 1) {
+                thunder(deck[array[0]], points);
+                thunder(deck[array[1]], points);
+            } else if (puntero > 1) {
+                    
+                Random ran = new Random();
+                int afortunado = ran.nextInt(puntero) + 0;
+                int afortunado2;
+                    
+                do {    
+                    afortunado2 = ran.nextInt(puntero) + 0;
+                } while (afortunado2 == afortunado);
+                
+                thunder(deck[array[afortunado]], points);
+                thunder(deck[array[afortunado2]], points);
+            }    
+        }
+    }
+    
     public static void fire(Card card, int turns) {
         card.fire += turns;
         System.out.println("Fire caused to " + card + " ("+ turns + " turn(s))");
@@ -271,10 +348,10 @@ public class Card implements Cloneable{
         }
     }
     
-    public static int damageCrit() {
-        if (posibilidad() <= 25) {
+    public static int damageCrit(int chance, int critic) {
+        if (posibilidad() <= chance) {
             System.out.println("CRITIC DAMAGE!!");
-            return 3;
+            return critic;
         } else {
             return 0;
         } 
@@ -413,6 +490,42 @@ public class Card implements Cloneable{
                 int afortunado = ran.nextInt(puntero) + 0;
                 bleed(deck[array[afortunado]], turns);
             }
+        }
+    }
+    
+    public static void bleedTwo(Card[] deck, int chance, int turns) {
+        if (posibilidad() <= chance) {
+                
+            int[] array = new int[5];
+            int puntero = 0;
+                
+            for (int i = 0; i < 5; i++) {
+                if (!deck[i].dead) {
+                    array[puntero] = i;
+                    puntero++;
+                }
+            }
+                
+            puntero -= 1;
+                
+            if (puntero == 0) {
+                bleed(deck[array[0]], turns);
+            } else if (puntero == 1) {
+                bleed(deck[array[0]], turns);
+                bleed(deck[array[1]], turns);
+            } else if (puntero > 1) {
+                    
+                Random ran = new Random();
+                int afortunado = ran.nextInt(puntero) + 0;
+                int afortunado2;
+                    
+                do {    
+                    afortunado2 = ran.nextInt(puntero) + 0;
+                } while (afortunado2 == afortunado);
+                
+                bleed(deck[array[afortunado]], turns);
+                bleed(deck[array[afortunado2]], turns);
+            }    
         }
     }
     
