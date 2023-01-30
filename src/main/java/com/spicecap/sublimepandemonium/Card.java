@@ -66,31 +66,17 @@ public class Card implements Cloneable{
         return copia;
     }
     
-    
     public boolean isDead() {
-        if (this.hp <= 0) 
-            return true;
-        else 
-            return false;
+        return this.hp <= 0;
     }
     public boolean isStuned() {
-        if (this.stuned == 0)
-            return false;
-        else 
-            return true;
+        return this.stuned != 0;
     }
     public boolean isBleeding() {
-        if (this.bleeding == 0) 
-            return false;
-        else
-            return true;
+        return this.bleeding != 0;
     }
-    
     public boolean isBurning() {
-        if (this.fire == 0) 
-            return false;
-        else 
-            return true;
+        return this.fire != 0;
     }
     
     
@@ -99,43 +85,26 @@ public class Card implements Cloneable{
         
         int attackPoints = 0;
         
-        // HABILIDADES DE DAÑO DIRECTO--------------------
-        
-        if (this.habbility == Habbility.THUNDER_ONE_1) 
-            thunderOne(deckDest, 20, 3);
-        else if (this.habbility == Habbility.FIRE_ONE_1) 
-            fireOne(deckDest, 25, 3);
-        else if (this.habbility == Habbility.FINISH_1) 
-            finishOne(deckDest, 25, 7);
-        
-        
-        
-        
-        
-        
-        // HABILIDADES BUFF ------------------------------
-        
-        else if (this.habbility == Habbility.DMG_UP_SLF_1) 
-            damageUpSelf(this, 30, 3);
-        else if (this.habbility == Habbility.DMG_CRIT)
-            attackPoints += damageCrit();
-        else if (this.habbility == Habbility.HEAL_SLF_1) 
-            healSelf(this, 30, 3);
-        else if (this.habbility == Habbility.HEAL_TWO_1) 
-            healTwo(deckOrig, 22, 3);
-        else if (this.habbility == Habbility.CLEAN_1) 
-            cleanOne(deckOrig, 50);
-        
-            
-        // HABILIDADES DEBUFF ----------------------------
-        
-        else if (this.habbility == Habbility.STUN_ONE_1) 
-            stunOne(deckDest, 20, 2);
-        else if (this.habbility == Habbility.BLEED_ONE_1) 
-            bleedOne(deckDest, 35, 2);
-        
-        
-        
+        switch (this.habbility) {
+            case THUNDER_ONE_1 -> thunderOne(deckDest, 20, 3);
+            case FIRE_ONE_1 -> fireOne(deckDest, 25, 3);
+            case FINISH_1 -> finishOne(deckDest, 25, 7);
+            case DMG_UP_SLF_1 -> damageUpSelf(this, 30, 3);
+            case DMG_CRIT -> attackPoints += damageCrit();
+            case HEAL_SLF_1 -> healSelf(this, 30, 3);
+            case HEAL_TWO_1 -> healTwo(deckOrig, 22, 3);
+            case CLEAN_1 -> cleanOne(deckOrig, 50);
+            case STUN_ONE_1 -> stunOne(deckDest, 20, 2);
+            case BLEED_ONE_1 -> bleedOne(deckDest, 35, 2);
+                
+                
+        }
+        // DAMAGE---------------
+        // BUFF --------------
+        // DEBUFF -------------
+        //-------------------------------------------------END SWITCH
+           
+         
         
         // ATAQUE BÁSICO --------------------------------
         
@@ -152,33 +121,41 @@ public class Card implements Cloneable{
                     attackPoints -= damageReduc(25, 2);
                     if (attackPoints < 0) 
                         attackPoints = 0;
-                }   
+                }  
+                
+                
+                switch (deckDest[target].habbility) {
+                    case DMG_REF_1 -> {
+                        if (posibilidad() <= 70) {
+                            basicAttack(this, deckDest[target], (int) Math.round(attackPoints * 0.7));
+                            System.out.println("Damage reflection ("+ (int) Math.floor(attackPoints * 0.34) + "pt)");
+                            this.hp -= Math.floor(attackPoints * 0.34);
+                            checkDeath(this);
+                            attackDone = true;
+                        } else {
+                            basicAttack(this, deckDest[target], attackPoints);
+                            attackDone = true;
+                        }
+                    }
                     
-                if (deckDest[target].habbility == Habbility.DMG_REF_1) {
-                    if (posibilidad() <= 70) {
-                        basicAttack(this, deckDest[target], (int) Math.round(attackPoints * 0.7));
-                        System.out.println("Damage reflection ("+ (int) Math.floor(attackPoints * 0.34) + "pt)");
-                        this.hp -= Math.floor(attackPoints * 0.34);
-                        checkDeath(this);
-                        attackDone = true;
-                    } else {
+                    case DODGE_1 -> {
+                        if (posibilidad() <= 20) {
+                            System.out.println(this + "@" + Integer.toHexString(this.hashCode()) + " ATTACKED--> " + deckDest[target] + "@" + Integer.toHexString(deckDest[target].hashCode()));
+                            System.out.println("But " + deckDest[target] + " dodged his attack");
+                            attackDone = true;
+                        } else {
+                            basicAttack(this, deckDest[target], attackPoints);
+                            attackDone = true;
+                        }
+                    }
+                        
+                    default -> {
                         basicAttack(this, deckDest[target], attackPoints);
                         attackDone = true;
-                    } 
-                } else if (deckDest[target].habbility == Habbility.DODGE_1) {
-                    if (posibilidad() <= 20) {
-                        System.out.println(this + "@" + Integer.toHexString(this.hashCode()) + " ATTACKED--> " + deckDest[target] + "@" + Integer.toHexString(deckDest[target].hashCode()));
-                        System.out.println("But " + deckDest[target] + " dodged his attack");
-                        attackDone = true;
-                    } else {
-                        basicAttack(this, deckDest[target], attackPoints);
-                        attackDone = true;
-                    } 
-                } else {
-                    basicAttack(this, deckDest[target], attackPoints);
-                    attackDone = true;
-                }
- 
+                    }
+                        
+                } // END SWITCH
+                
             }
         } while (!attackDone && target < 5);
         
@@ -195,7 +172,7 @@ public class Card implements Cloneable{
     //---------------------HABILIDADES--------------------
     //----------------------------------------------------
     
-    // Habilidades de daño directo
+    // Damage
     
     public static void thunder(Card card, int points) {
         System.out.println("Thunder for " + card + " (" + points + "pt)");
@@ -283,7 +260,7 @@ public class Card implements Cloneable{
     
     
     
-    // Habilidades buff
+    // Buff
     
     public static void damageUp(Card card, int plus) {
         System.out.println("Damage up for " + card + " (" + plus + "pt)");    
@@ -374,14 +351,16 @@ public class Card implements Cloneable{
                 
         if (puntero == 0) {
             clean(deck[array[0]]);
+            heal(deck[array[0]], 2);
         } else if (puntero > 0) {
             Random ran = new Random();
             int afortunado = ran.nextInt(puntero) + 0;
             clean(deck[array[afortunado]]);
+            heal(deck[array[afortunado]], 2);
         }   
     }
     
-    // Habilidades debuff
+    // Debuff
     
     public static void stun(Card card, int turns) {
         card.stuned += turns;
@@ -451,6 +430,8 @@ public class Card implements Cloneable{
         else 
             return 0;
     }
+    
+    
     
     
     
