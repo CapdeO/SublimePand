@@ -41,22 +41,22 @@ public class Card implements Cloneable{
         FIRE_ONE_1,       // %35 chance - 3 turns
         FIRE_ONE_2,       // %30 chance - 4 turns
         
-        HEAL_SLF_1,       // % chance -  turns
-        HEAL_SLF_2,       // % chance -  turns
+        HEAL_SLF_1,       // %25 chance - 4 pts
+        HEAL_SLF_2,       // %30 chance - 2 pts
         
-        HEAL_TWO_1,       // % chance -  turns
-        HEAL_TWO_2,       // % chance -  turns
+        HEAL_TWO_1,       // %20 chance - 3 pts
+        HEAL_TWO_2,       // %25 chance - 2 pts
         
         THUNDER_ONE_1,    // %25 chance - 5 pts
         THUNDER_ONE_2,    // %30 chance - 4 pts
         THUNDER_TWO_1,    // %20 chance - 3 pts
         THUNDER_TWO_2,    // %30 chance - 2 pts
         
-        STUN_ONE_1,       // % chance -  turns
-        STUN_ONE_2,       // % chance -  turns
+        STUN_ONE_1,       // %20 chance - 2 turns
+        STUN_ONE_2,       // %30 chance - 1 turns
         
-        STUN_TWO_1,       // % chance -  turns
-        STUN_TWO_2,       // % chance -  turns
+        STUN_TWO_1,       // %20 chance - 1 turns
+        STUN_TWO_2,       // %15 chance - 2 turns
     }
     
     public int id;
@@ -130,11 +130,16 @@ public class Card implements Cloneable{
         // BUFF --------------    
             case DMG_UP_SLF_1 -> damageUpSelf(this, 30, 3);
             case DMG_CRIT_1 -> attackPoints += damageCrit(25, 3);
-            case HEAL_SLF_1 -> healSelf(this, 30, 3);
-            case HEAL_TWO_1 -> healTwo(deckOrig, 22, 3);
+            case HEAL_SLF_1 -> healSelf(this, 25, 4);
+            case HEAL_SLF_2 -> healSelf(this, 30, 2);
+            case HEAL_TWO_1 -> healTwo(deckOrig, 20, 3);
+            case HEAL_TWO_2 -> healTwo(deckDest, 25, 2);
             case CLEAN_ONE_1 -> cleanOne(deckOrig, 50);
         // DEBUFF -------------    
             case STUN_ONE_1 -> stunOne(deckDest, 20, 2);
+            case STUN_ONE_2 -> stunOne(deckDest, 25, 1);
+            case STUN_TWO_1 -> stunTwo(deckDest, 20, 1);
+            case STUN_TWO_2 -> stunTwo(deckDest, 15, 2);
             case BLEED_ONE_1 -> bleedOne(deckDest, 40, 2);
             case BLEED_ONE_2 -> bleedOne(deckDest, 30, 4);
             case BLEED_TWO_1 -> bleedTwo(deckDest, 30, 2);
@@ -460,6 +465,42 @@ public class Card implements Cloneable{
                 int afortunado = ran.nextInt(puntero) + 0;
                 stun(deck[array[afortunado]], turns);
             }
+        }
+    }
+    
+    public static void stunTwo(Card[] deck, int chance, int turns) {
+        if (posibilidad() <= chance) {
+                
+            int[] array = new int[5];
+            int puntero = 0;
+                
+            for (int i = 0; i < 5; i++) {
+                if (!deck[i].dead) {
+                    array[puntero] = i;
+                    puntero++;
+                }
+            }
+                
+            puntero -= 1;
+                
+            if (puntero == 0) {
+                stun(deck[array[0]], turns);
+            } else if (puntero == 1) {
+                stun(deck[array[0]], turns);
+                stun(deck[array[1]], turns);
+            } else if (puntero > 1) {
+                    
+                Random ran = new Random();
+                int afortunado = ran.nextInt(puntero) + 0;
+                int afortunado2;
+                    
+                do {    
+                    afortunado2 = ran.nextInt(puntero) + 0;
+                } while (afortunado2 == afortunado);
+                
+                stun(deck[array[afortunado]], turns);
+                stun(deck[array[afortunado2]], turns);
+            }    
         }
     }
     
