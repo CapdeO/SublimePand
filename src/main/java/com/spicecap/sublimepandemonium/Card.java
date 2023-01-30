@@ -86,25 +86,23 @@ public class Card implements Cloneable{
         int attackPoints = 0;
         
         switch (this.habbility) {
+        // DAMAGE---------------    
             case THUNDER_ONE_1 -> thunderOne(deckDest, 20, 3);
             case FIRE_ONE_1 -> fireOne(deckDest, 25, 3);
             case FINISH_1 -> finishOne(deckDest, 25, 7);
+        // BUFF --------------    
             case DMG_UP_SLF_1 -> damageUpSelf(this, 30, 3);
             case DMG_CRIT -> attackPoints += damageCrit();
             case HEAL_SLF_1 -> healSelf(this, 30, 3);
             case HEAL_TWO_1 -> healTwo(deckOrig, 22, 3);
             case CLEAN_1 -> cleanOne(deckOrig, 50);
+        // DEBUFF -------------    
             case STUN_ONE_1 -> stunOne(deckDest, 20, 2);
             case BLEED_ONE_1 -> bleedOne(deckDest, 35, 2);
                 
                 
         }
-        // DAMAGE---------------
-        // BUFF --------------
-        // DEBUFF -------------
-        //-------------------------------------------------END SWITCH
-           
-         
+        
         
         // ATAQUE BÁSICO --------------------------------
         
