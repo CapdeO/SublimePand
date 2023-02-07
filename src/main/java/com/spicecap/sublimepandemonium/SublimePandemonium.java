@@ -21,11 +21,11 @@ public class SublimePandemonium {
         //-------------------------------------------------
         Player player1 = new Player();
         
-        player1.refDeck[0] = 0;
-        player1.refDeck[1] = 2;
-        player1.refDeck[2] = 9;
-        player1.refDeck[3] = 3;
-        player1.refDeck[4] = 1;
+        player1.refDeck[0] = 100; //Taur
+        player1.refDeck[1] = 200; //Abomination
+        player1.refDeck[2] = 301; //Angel
+        player1.refDeck[3] = 401; //Duende Malo
+        player1.refDeck[4] = 601; //Ventress
         
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < bank.length; j++) {
@@ -43,11 +43,11 @@ public class SublimePandemonium {
         
         Player player2 = new Player();
         
-        player2.refDeck[0] = 6;
-        player2.refDeck[1] = 7;
-        player2.refDeck[2] = 4;
-        player2.refDeck[3] = 5;
-        player2.refDeck[4] = 8;
+        player2.refDeck[0] = 100;   //Taur
+        player2.refDeck[1] = 200;   //Abomination
+        player2.refDeck[2] = 301;   //Angel
+        player2.refDeck[3] = 401;   //Duende Malo
+        player2.refDeck[4] = 601;  //Ventress
         
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < bank.length; j++) {
