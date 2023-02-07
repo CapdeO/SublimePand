@@ -10,66 +10,73 @@ public class Card implements Cloneable{
         TANK, FIGHTER, SUPPORT, MARKSMAN, MAGE, ASSASSIN
     }
     public enum Habbility {
-        BLEED_ONE_1,      // %35 chance - 2 turns
-        BLEED_ONE_2,      // %25 chance - 4 turns
-        BLEED_TWO_1,      // %25 chance - 2 turns
-        BLEED_TWO_2,      // %20 chance - 3 turns
+        BLEED_ONE_1,      // %35 chance - 2 turns     X
+        BLEED_ONE_2,      // %25 chance - 4 turns     X
         
-        CLEAN_ONE_1,      // %40 chance - 2 pts heal
-        CLEAN_ONE_2,      // %35 chance - 3 pts heal
-        CLEAN_TWO_1,      // %25 chance - 2 pts heal
-        CLEAN_TWO_2,      // %20 chance - 3 pts heal
+        BLEED_TWO_1,      // %25 chance - 2 turns     X
+        BLEED_TWO_2,      // %20 chance - 3 turns     X
         
-        DMG_CRIT_1,       // %25 chance - 3 pts
-        DMG_CRIT_2,       // %20 chance - 4 pts
+        CLEAN_ONE_1,      // %40 chance - 2 pts heal  X
+        CLEAN_ONE_2,      // %35 chance - 3 pts heal  X
         
-        DMG_RED_1,        // %25 chance - 2 pts
-        DMG_RED_2,        // %20 chance - 3 pts
+        CLEAN_TWO_1,      // %25 chance - 2 pts heal  X
+        CLEAN_TWO_2,      // %20 chance - 3 pts heal  X
         
-        DMG_REF_1,        // %50 chance - %30 dmg
-        DMG_REF_2,        // %30 chance - %50 dmg
+        DMG_CRIT_1,       // %25 chance - 3 pts       X
+        DMG_CRIT_2,       // %20 chance - 4 pts       X
         
-        DMG_UP_SLF_1,     // %25 chance - 2 pts
-        DMG_UP_SLF_2,     // %20 chance - 3 pts
+        DMG_RED_1,        // %25 chance - 2 pts       X
+        DMG_RED_2,        // %20 chance - 3 pts       X
+        
+        DMG_REF_1,        // %50 chance - %30 dmg     X
+        DMG_REF_2,        // %30 chance - %50 dmg     X
+        
+        DMG_UP_SLF_1,     // %25 chance - 2 pts       X
+        DMG_UP_SLF_2,     // %20 chance - 3 pts       X
         
         DMG_UP_ONE_1,     // %25 chance - 3 pts
         DMG_UP_ONE_2,     // %20 chance - 4 pts
+        
         DMG_UP_TWO_1,     // %35 chance - 1 pts
         DMG_UP_TWO_2,     // %20 chance - 2 pts
         
         DMG_DOWN_ONE_1,   // %25 chance - 3 pts
         DMG_DOWN_ONE_2,   // %30 chance - 2 pts
+        
         DMG_DOWN_TWO_1,   // %25 chance - 2 pts
         DMG_DOWN_TWO_2,   // %15 chance - 3 pts
         
-        DODGE_1,          // %20 chance 
-        DODGE_2,          // %30 chance 
+        DODGE_1,          // %20 chance               X
+        DODGE_2,          // %30 chance               X
         
-        FINISH_1,         // %25 chance - 6 pts
-        FINISH_2,         // %20 chance - 7 pts
+        FINISH_1,         // %25 chance - 6 pts       X
+        FINISH_2,         // %20 chance - 7 pts       X
         
         FIRE_ONE_1,       // %35 chance - 3 turns
         FIRE_ONE_2,       // %30 chance - 4 turns
         
-        HEAL_SLF_1,       // %25 chance - 4 pts
-        HEAL_SLF_2,       // %30 chance - 2 pts
         
-        HEAL_TWO_1,       // %20 chance - 3 pts
-        HEAL_TWO_2,       // %25 chance - 2 pts
+        
+        HEAL_SLF_1,       // %25 chance - 4 pts     X
+        HEAL_SLF_2,       // %30 chance - 2 pts     X
+        
+        HEAL_TWO_1,       // %20 chance - 3 pts     X
+        HEAL_TWO_2,       // %25 chance - 2 pts     X
         
         THUNDER_ONE_1,    // %25 chance - 5 pts
         THUNDER_ONE_2,    // %30 chance - 4 pts
+        
         THUNDER_TWO_1,    // %20 chance - 3 pts
         THUNDER_TWO_2,    // %30 chance - 2 pts
         
-        STUN_ONE_1,       // %20 chance - 2 turns
-        STUN_ONE_2,       // %30 chance - 1 turns
+        STUN_ONE_1,       // %20 chance - 2 turns  X
+        STUN_ONE_2,       // %30 chance - 1 turns  X
         
-        STUN_TWO_1,       // %20 chance - 1 turns
-        STUN_TWO_2,       // %15 chance - 2 turns
+        STUN_TWO_1,       // %20 chance - 1 turns  X
+        STUN_TWO_2,       // %15 chance - 2 turns  X
         
-        POISON_1,         // %40  chance
-        POISON_2,         // %30  chance
+        POISON_1,         // %40  chance           X
+        POISON_2,         // %30  chance           X
     }
     
     public int id;
@@ -153,7 +160,7 @@ public class Card implements Cloneable{
             case DMG_CRIT_2 -> attackPoints += damageCrit(20, 4);
             case HEAL_SLF_1 -> healSelf(this, 25, 4);
             case HEAL_SLF_2 -> healSelf(this, 30, 2);
-            case HEAL_TWO_1 -> healTwo(deckOrig, 100, 3);
+            case HEAL_TWO_1 -> healTwo(deckOrig, 20, 3);
             case HEAL_TWO_2 -> healTwo(deckOrig, 25, 2);
             case CLEAN_ONE_1 -> cleanOne(deckOrig, 40, 2);
             case CLEAN_ONE_2 -> cleanOne(deckOrig, 35, 3);
@@ -174,7 +181,6 @@ public class Card implements Cloneable{
             case BLEED_TWO_2 -> bleedTwo(deckDest, 25, 3);
             case FIRE_ONE_1 -> fireOne(deckDest, 35, 3);   
             case FIRE_ONE_2 -> fireOne(deckDest, 30, 4);
-                
         }
         
         
@@ -512,7 +518,7 @@ public class Card implements Cloneable{
             } else if (puntero == 1) {
                 heal(deck[array[0]], plus);
                 heal(deck[array[1]], plus);
-            } else {
+            } else if (puntero > 1) {
                     
                 Random ran = new Random();
                 int afortunado = ran.nextInt(puntero) + 0;
@@ -682,7 +688,7 @@ public class Card implements Cloneable{
             } else if (puntero == 1) {
                 damageDown(deck[array[0]], less);
                 damageDown(deck[array[1]], less);
-            } else if  (puntero > 1){  
+            } else if (puntero > 1){  
                 Random ran = new Random();
                 int afortunado = ran.nextInt(puntero) + 0;
                 int afortunado2;
